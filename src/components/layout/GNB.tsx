@@ -1,15 +1,40 @@
-import { Center, Flex, Text } from "@chakra-ui/react";
+import { Center, Flex, Image } from "@chakra-ui/react";
+import Button from "../Button";
 
 export default function GNB() {
   return (
-    <>
-      <Flex w={"100%"} h={"72px"} justify={"flex-end"}>
-        <Center w={"20%"} bg={"subMain"}>
-          <Text fontSize={"md"} color={"primary"}>
-            회원가입
-          </Text>
-        </Center>
-      </Flex>
-    </>
+    <Flex
+      w={"100%"}
+      h={"72px"}
+      justify={"space-between"}
+      boxShadow={"2px 2px 2px #646363"}
+      position={"absolute"}
+      bg="white"
+    >
+      <Image src={"/images/main-logo.svg"} h={"100%"} />
+      <Center h={"100%"}>
+        <Button
+          w={"172px"}
+          bg={"subMain"}
+          fontSize={"2xl"}
+          color={"mainText"}
+          fontWeight={"800"}
+          h={"100%"}
+          cursor={"pointer"}
+        >
+          회원가입
+        </Button>
+        <Button
+          w={"172px"}
+          bg={"primary"}
+          fontSize={"2xl"}
+          color={"subText"}
+          fontWeight={"700"}
+          h={"100%"}
+        >
+          로그인
+        </Button>
+      </Center>
+    </Flex>
   );
 }

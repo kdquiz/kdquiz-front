@@ -1,12 +1,14 @@
-import { Center } from "@chakra-ui/react";
-import { Col, Row } from "antd";
+import { Center, Image } from "@chakra-ui/react";
 
 export default function Index() {
   return (
-    <Row>
-      <Col span={24}>
-        <Center>asdsa</Center>
-      </Col>
-    </Row>
+    <Center w={"100%"}>
+      <Image
+        src={"images/main-bg.png"}
+        h={"100%"}
+        w={"100%"}
+        objectFit={"cover"}
+      />
+    </Center>
   );
 }
