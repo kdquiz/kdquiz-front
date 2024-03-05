@@ -11,6 +11,7 @@ const theme = extendTheme({
     primary: "#9981DB",
     subMain: "#FAEC71",
     mainText: "#646363",
+    subText: "#FFFFFF",
     buttonBg1: "#F9F9CD",
     buttonBg2: "#FADACF",
     buttonBg3: "#CFFADE",
