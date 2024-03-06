@@ -7,10 +7,10 @@ export default function GNB() {
       w={"100%"}
       h={"72px"}
       justify={"space-between"}
-      borderBottom={"1px"}
-      borderColor={"mainText"}
       position={"absolute"}
-      bg="white"
+      boxShadow={"-2px 2px 2px #646363"}
+      bg={"white"}
+      top={0}
     >
       <Image src={"/images/main-logo.svg"} h={"100%"} />
       <Center h={"100%"}>
