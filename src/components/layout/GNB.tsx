@@ -7,7 +7,8 @@ export default function GNB() {
       w={"100%"}
       h={"72px"}
       justify={"space-between"}
-      boxShadow={"2px 2px 2px #646363"}
+      borderBottom={"1px"}
+      borderColor={"mainText"}
       position={"absolute"}
       bg="white"
     >
