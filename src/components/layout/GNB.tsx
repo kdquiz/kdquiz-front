@@ -10,7 +10,7 @@ export default function GNB() {
       borderBottom={"1px"}
       borderColor={"mainText"}
       position={"absolute"}
-      bg="white"
+      bg={"white"}
     >
       <Image src={"/images/main-logo.svg"} h={"100%"} />
       <Center h={"100%"}>
