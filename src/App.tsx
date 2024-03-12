@@ -4,6 +4,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import theme from "./theme";
 import DefaultLayout from "./pages/DefaultLayout";
 import MainPage from "./pages/MainPage";
+import AsdPage from "./pages/AsdPage";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <DefaultLayout>
         <Routes>
           <Route path={"/"} element={<MainPage />} />
+          <Route path={"/"} element={<AsdPage />} />
         </Routes>
       </DefaultLayout>
     </ChakraProvider>
