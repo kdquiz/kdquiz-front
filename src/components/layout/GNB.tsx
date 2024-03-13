@@ -1,5 +1,6 @@
 import { Center, Flex, Image } from "@chakra-ui/react";
 import Button from "../Button";
+import mainLogo from "../../../public/images/main-logo.svg";
 
 export default function GNB() {
   return (
@@ -12,7 +13,7 @@ export default function GNB() {
       bg={"white"}
       top={0}
     >
-      <Image src={"/images/main-logo.svg"} h={"100%"} />
+      <Image src={mainLogo} h={"100%"} />
       <Center h={"100%"}>
         <Button
           w={"172px"}

@@ -12,7 +12,7 @@ function App() {
       <DefaultLayout>
         <Routes>
           <Route path={"/"} element={<MainPage />} />
-          <Route path={"/"} element={<AsdPage />} />
+          <Route path={"/asd"} element={<AsdPage />} />
         </Routes>
       </DefaultLayout>
     </ChakraProvider>

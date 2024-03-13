@@ -1,19 +1,19 @@
 import { Center, Image } from "@chakra-ui/react";
 import Button from "../components/Button";
-
+import mainBg from "../../public/images/main-bg.png";
+import mainLogo from "../../public/images/main-logo.svg";
 export default function Index() {
   return (
     <Center
       w={"100%"}
-      backgroundImage={"images/main-bg.png"}
+      backgroundImage={mainBg}
       backgroundPosition={"center"}
-      mt={"72px"}
       h={"760px"}
       flexDir={"column"}
       gap={"150px"}
     >
       <Image
-        src={"images/main-logo.svg"}
+        src={mainLogo}
         w={"800px"}
         boxShadow={"-2px 2px 2px #646363"}
         objectFit={"cover"}

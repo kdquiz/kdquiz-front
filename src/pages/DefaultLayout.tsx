@@ -5,7 +5,9 @@ import GNB from "../components/layout/GNB";
 const DefaultLayout = ({ children }: { children: ReactNode }) => (
   <Flex flexDirection="column" h={"100%"}>
     <GNB />
-    <Center h={"100%"}>{children}</Center>
+    <Center h={"100%"} mt={"72px"}>
+      {children}
+    </Center>
   </Flex>
 );
 
