@@ -1,23 +1,25 @@
-import { Center, Flex, Image } from "@chakra-ui/react";
+import { Center, Flex, Image, Link } from "@chakra-ui/react";
 import Button from "../Button";
 
 export default function GNB() {
   return (
     <Flex
       w={"100%"}
-      h={"72px"}
+      h={["36px", null, "72px"]}
       justify={"space-between"}
       position={"absolute"}
       boxShadow={"-2px 2px 2px #646363"}
       bg={"white"}
       top={0}
     >
-      <Image src={"./images/main-logo.svg"} h={"100%"} />
+      <Link href={"/"}>
+        <Image src={"./images/main-logo.svg"} h={"100%"} />
+      </Link>
       <Center h={"100%"}>
         <Button
-          w={"172px"}
+          w={["86px", null, "172px"]}
           bg={"subMain"}
-          fontSize={"2xl"}
+          fontSize={["md", null, "2xl"]}
           color={"mainText"}
           fontWeight={"800"}
           h={"100%"}
@@ -26,9 +28,9 @@ export default function GNB() {
           회원가입
         </Button>
         <Button
-          w={"172px"}
+          w={["86px", null, "172px"]}
           bg={"primary"}
-          fontSize={"2xl"}
+          fontSize={["md", null, "2xl"]}
           color={"subText"}
           fontWeight={"700"}
           h={"100%"}
