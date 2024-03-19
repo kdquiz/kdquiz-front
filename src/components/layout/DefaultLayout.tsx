@@ -5,7 +5,7 @@ import GNB from "./GNB.tsx";
 const DefaultLayout = ({ children }: { children: ReactNode }) => (
   <Flex flexDirection="column">
     <GNB />
-    <Center>{children}</Center>
+    <Center mt={"72px"}>{children}</Center>
   </Flex>
 );
 
