@@ -4,14 +4,14 @@ export default function Index() {
   return (
     <Center
       w={"100%"}
-      backgroundImage={"/images/main-bg.png"}
+      backgroundImage={"./images/main-bg.png"}
       backgroundPosition={"center"}
       h={"760px"}
       flexDir={"column"}
       gap={"150px"}
     >
       <Image
-        src={"/images/main-logo.svg"}
+        src={"./images/main-logo.svg"}
         w={"800px"}
         boxShadow={"-2px 2px 2px #646363"}
         objectFit={"cover"}

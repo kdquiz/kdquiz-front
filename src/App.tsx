@@ -1,21 +1,62 @@
 import "./App.css";
-import { ChakraProvider } from "@chakra-ui/react";
-import DefaultLayout from "./pages/DefaultLayout.tsx";
-import { Route, Routes } from "react-router-dom";
-import theme from "./theme.ts";
-import MainPage from "./pages/MainPage.tsx";
-import AsdPage from "./pages/AsdPage.tsx";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Index from "./pages";
+import AsdPage from "@/pages/asd.tsx";
 
+// interface RouteCommon {
+//   loader?: LoaderFunction;
+//   action?: ActionFunction;
+//   ErrorBoundary?: React.ComponentType<any>;
+// }
+//
+// interface IRoute extends RouteCommon {
+//   path: string;
+//   Element: React.ComponentType<any>;
+// }
+//
+// interface Pages {
+//   [key: string]: {
+//     default: React.ComponentType<any>;
+//   } & RouteCommon;
+// }
+//
+// const pages: Pages = import.meta.glob("./pages/**/*.tsx", { eager: true });
+// const routes: IRoute[] = [];
+// for (const path of Object.keys(pages)) {
+//   const fileName = path.match(/\.\/pages\/(.*)\.tsx$/)?.[1];
+//   if (!fileName) {
+//     continue;
+//   }
+//
+//   const normalizedPathName = fileName.includes("$")
+//     ? fileName.replace("$", ":")
+//     : fileName.replace(/\/index/, "");
+//
+//   routes.push({
+//     path: fileName === "index" ? "/" : `/${normalizedPathName.toLowerCase()}`,
+//     Element: pages[path].default,
+//     loader: pages[path]?.loader as LoaderFunction | undefined,
+//     action: pages[path]?.action as ActionFunction | undefined,
+//     ErrorBoundary: pages[path]?.ErrorBoundary,
+//   });
+// }
+//
+// const router = createBrowserRouter(
+//   routes.map(({ Element, ErrorBoundary, ...rest }) => ({
+//     ...rest,
+//     element: <Element />,
+//     ...(ErrorBoundary && { errorElement: <ErrorBoundary /> }),
+//   })),
+// );
 function App() {
   return (
-    <ChakraProvider theme={theme}>
-      <DefaultLayout>
-        <Routes>
-          <Route path={"/"} element={<MainPage />} />
-          <Route path={"/asd"} element={<AsdPage />} />
-        </Routes>
-      </DefaultLayout>
-    </ChakraProvider>
+    <BrowserRouter>
+      <Routes>
+        <Route path={"/"} element={<Index />} />
+        <Route path={"/asd"} element={<AsdPage />} />
+        <Route path={"/*"} element={<Index />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

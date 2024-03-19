@@ -12,7 +12,7 @@ export default function GNB() {
       bg={"white"}
       top={0}
     >
-      <Image src={"/images/main-logo.svg"} h={"100%"} />
+      <Image src={"./images/main-logo.svg"} h={"100%"} />
       <Center h={"100%"}>
         <Button
           w={"172px"}
