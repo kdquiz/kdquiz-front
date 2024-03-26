@@ -8,7 +8,7 @@ export default function Index() {
       w={"100%"}
       backgroundImage={"./images/main-bg.png"}
       backgroundPosition={"center"}
-      h={"760px"}
+      h={"100%"}
       flexDir={"column"}
       gap={"150px"}
     >
@@ -18,16 +18,15 @@ export default function Index() {
         boxShadow={"-2px 2px 2px #646363"}
         objectFit={"cover"}
       />
-      <Link href={"/play"}>
+      <Link href={"/play"} style={{ textDecoration: "none" }}>
         <Button
           w={["100px", null, "200px"]}
-          borderRadius={"8px"}
+          borderRadius={"12px"}
           bg={"primary"}
           color={"subText"}
           h={["50px", null, "100px"]}
           fontSize={["2xl", null, "5xl"]}
           fontWeight={"700"}
-          borderColor={"subMain"}
           onClick={() => navigate("/play")}
         >
           PLAY
