@@ -110,7 +110,6 @@ export default function SignupPage() {
                   <Input.Password
                     {...field}
                     onChange={() => errors.pw}
-                    maxLength={6}
                     style={{ width: "274px" }}
                   />
                 )}
@@ -134,7 +133,6 @@ export default function SignupPage() {
                   <Input.Password
                     {...field}
                     onChange={() => errors.pw}
-                    maxLength={6}
                     style={{ width: "274px" }}
                   />
                 )}
