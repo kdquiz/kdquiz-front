@@ -53,7 +53,6 @@ export default function LoginPage() {
                   <Input.Password
                     {...field}
                     onChange={() => errors.pw}
-                    maxLength={6}
                     style={{ width: "274px" }}
                   />
                 )}
