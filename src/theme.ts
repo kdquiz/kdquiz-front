@@ -8,14 +8,19 @@ const config = {
 const theme = extendTheme({
   config,
   colors: {
-    primary: "#9981DB",
+    primary: "#85AEFF",
     subMain: "#FAEC71",
     mainText: "#646363",
     subText: "#FFFFFF",
-    buttonBg1: "#F9F9CD",
-    buttonBg2: "#FADACF",
-    buttonBg3: "#CFFADE",
-    buttonBg4: "#ECCDF9",
+    buttonBg1: "#FFE81D",
+    buttonBg2: "#AA76FF",
+    buttonBg3: "#FF5656",
+    buttonBg4: "#63CF61",
+    error: "#FF6363",
+  },
+  fonts: {
+    heading: "TmoneyRoundWindExtraBold",
+    body: "TmoneyRoundWindExtraBold",
   },
 });
 

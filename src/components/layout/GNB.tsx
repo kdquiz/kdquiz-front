@@ -16,27 +16,37 @@ export default function GNB() {
         <Image src={"./images/main-logo.svg"} h={"100%"} />
       </Link>
       <Center h={"100%"}>
-        <Button
-          w={["86px", null, "172px"]}
-          bg={"subMain"}
-          fontSize={["md", null, "2xl"]}
-          color={"mainText"}
-          fontWeight={"800"}
-          h={"100%"}
-          cursor={"pointer"}
+        <Link
+          href={"/signup"}
+          style={{ height: "100%", textDecoration: "none" }}
         >
-          회원가입
-        </Button>
-        <Button
-          w={["86px", null, "172px"]}
-          bg={"primary"}
-          fontSize={["md", null, "2xl"]}
-          color={"subText"}
-          fontWeight={"700"}
-          h={"100%"}
+          <Button
+            w={["86px", null, "172px"]}
+            bg={"subMain"}
+            fontSize={["md", null, "2xl"]}
+            color={"mainText"}
+            fontWeight={"800"}
+            h={"100%"}
+            cursor={"pointer"}
+          >
+            회원가입
+          </Button>
+        </Link>
+        <Link
+          href={"/login"}
+          style={{ height: "100%", textDecoration: "none" }}
         >
-          로그인
-        </Button>
+          <Button
+            w={["86px", null, "172px"]}
+            bg={"primary"}
+            fontSize={["md", null, "2xl"]}
+            color={"subText"}
+            fontWeight={"700"}
+            h={"100%"}
+          >
+            로그인
+          </Button>
+        </Link>
       </Center>
     </Flex>
   );

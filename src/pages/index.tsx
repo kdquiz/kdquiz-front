@@ -1,22 +1,17 @@
-import { Center, Image, Link } from "@chakra-ui/react";
+import { Center, Image, Link, Text } from "@chakra-ui/react";
 import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
 export default function Index() {
   const navigate = useNavigate();
+
   return (
-    <Center
-      w={"100%"}
-      backgroundImage={"./images/main-bg.png"}
-      backgroundPosition={"center"}
-      h={"100%"}
-      flexDir={"column"}
-      gap={"150px"}
-    >
+    <Center w={"100%"} flexDir={"column"} gap={"150px"}>
       <Image
         src={"./images/main-logo.svg"}
         w={["300px", null, "800px"]}
         boxShadow={"-2px 2px 2px #646363"}
-        objectFit={"cover"}
+        backgroundSize={"cover"}
+        borderRadius={"12px"}
       />
       <Link href={"/play"} style={{ textDecoration: "none" }}>
         <Button
@@ -29,7 +24,7 @@ export default function Index() {
           fontWeight={"700"}
           onClick={() => navigate("/play")}
         >
-          PLAY
+          <Text>PLAY</Text>
         </Button>
       </Link>
     </Center>

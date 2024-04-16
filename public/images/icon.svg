@@ -1,11 +1,11 @@
 <svg width="300" height="300" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect width="300" height="300" rx="25" fill="#9981DB"/>
+    <rect width="300" height="300" rx="25" fill="#85AEFF"/>
     <g filter="url(#filter0_d_120_2)">
         <rect width="29" height="82.8547" transform="matrix(0.738485 -0.674269 0.855604 0.517631 174.783 215.698)" fill="#FAEC71"/>
         <circle cx="148" cy="150" r="115" fill="#FAEC71"/>
     </g>
     <g filter="url(#filter1_i_120_2)">
-        <circle cx="148" cy="150" r="95.6522" fill="#9981DB"/>
+        <circle cx="148" cy="150" r="95.6522" fill="#85AEFF"/>
     </g>
     <g filter="url(#filter2_d_120_2)">
         <line y1="-7.5" x2="52.8065" y2="-7.5" transform="matrix(-0.794036 0.60787 0.794036 0.60787 214.553 102.174)" stroke="#FAEC71" stroke-width="15"/>

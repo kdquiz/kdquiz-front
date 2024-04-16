@@ -1,0 +1,8 @@
+@font-face {
+    font-family: "TmoneyRoundWindExtraBold";
+    src: url("./font/TmoneyRoundWindExtraBold.ttf") format("truetype");
+}
+
+body {
+    font-family: 'TmoneyRoundWindExtraBold';
+}
