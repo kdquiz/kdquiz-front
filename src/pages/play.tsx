@@ -7,7 +7,6 @@ export default function PlayPage() {
       h={"100%"}
       gap={"12px"}
       flexDir={"column"}
-      backgroundImage={"./images/main-bg.png"}
       backgroundPosition={"center"}
       w={"100%"}
     >
