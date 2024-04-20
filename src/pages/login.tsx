@@ -1,6 +1,5 @@
 import Container from "@/components/layout/Container.tsx";
-import { Text, Center, Flex, Link } from "@chakra-ui/react";
-import { Input } from "antd";
+import { Text, Center, Flex, Link, Input } from "@chakra-ui/react";
 import Button from "@/components/Button.tsx";
 import { Controller, useForm } from "react-hook-form";
 
@@ -12,13 +11,18 @@ export default function LoginPage() {
   } = useForm();
   return (
     <Container>
-      <Center w={"380px"} h={"620px"} flexDir={"column"} gap={6}>
-        <Text fontSize={"3xl"} color={"mainText"}>
+      <Center
+        w={["300px", null, "380px"]}
+        h={["500px", null, "620px"]}
+        flexDir={"column"}
+        gap={6}
+      >
+        <Text fontSize={["2xl", null, "3xl"]} color={"mainText"}>
           로그인
         </Text>
         <form onSubmit={handleSubmit(() => {})}>
           <Flex flexDir={"column"} gap={1}>
-            <Text fontSize={"2xl"} color={"mainText"}>
+            <Text fontSize={["xl", null, "2xl"]} color={"mainText"}>
               이메일
             </Text>
             <Flex gap={1}>
@@ -27,8 +31,9 @@ export default function LoginPage() {
                   <Input
                     {...field}
                     placeholder={"example@kdquiz.com"}
-                    style={{ width: "274px" }}
+                    w={["auto", null, "274px"]}
                     onChange={() => errors.email}
+                    fontSize={["sm", null, "md"]}
                   />
                 )}
                 name={"email"}
@@ -44,16 +49,19 @@ export default function LoginPage() {
             </Center>
           </Flex>
           <Flex flexDir={"column"}>
-            <Text fontSize={"2xl"} color={"mainText"}>
+            <Text fontSize={["xl", null, "2xl"]} color={"mainText"}>
               비밀번호
             </Text>
             <Flex gap={1}>
               <Controller
                 render={({ field }) => (
-                  <Input.Password
+                  <Input
                     {...field}
+                    type={"password"}
                     onChange={() => errors.pw}
-                    style={{ width: "274px" }}
+                    maxLength={6}
+                    w={["auto", null, "274px"]}
+                    fontSize={["sm", null, "md"]}
                   />
                 )}
                 name={"code"}
@@ -69,17 +77,17 @@ export default function LoginPage() {
         </form>
         <Button
           w={"160px"}
-          fontSize={"xl"}
-          h={"40px"}
+          fontSize={["md", null, "xl"]}
+          h={["30px", null, "40px"]}
           borderRadius={"6px"}
           bg={"primary"}
           color={"white"}
         >
           로그인
         </Button>
-        <Text>
+        <Text fontSize={["sm", null, "md"]}>
           계정이 없나요?
-          <Link href={"/signup"} color={"primary"}>
+          <Link href={"/signup"} color={"blue"}>
             가입!
           </Link>
         </Text>

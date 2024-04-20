@@ -5,6 +5,8 @@ import {
   LoaderFunction,
   RouterProvider,
 } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
+import { Center } from "@chakra-ui/react";
 
 interface RouteCommon {
   loader?: LoaderFunction;
@@ -52,7 +54,25 @@ const router = createBrowserRouter(
   })),
 );
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <Center
+      mt={["36px", null, "72px"]}
+      h={"100%"}
+      backgroundImage={"./images/main-bg.png"}
+      backgroundPosition={"center"}
+    >
+      <AnimatePresence>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <RouterProvider router={router} />
+        </motion.div>
+      </AnimatePresence>
+    </Center>
+  );
 }
 
 export default App;
