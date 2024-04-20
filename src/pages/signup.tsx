@@ -4,7 +4,8 @@ import Button from "@/components/Button.tsx";
 import { Controller, useForm } from "react-hook-form";
 import { useState } from "react";
 import axios from "axios";
-import { notification } from "antd";
+import { notification, Spin } from "antd";
+import { Timer } from "@/components/Timer.tsx";
 
 export default function SignupPage() {
   const {
@@ -34,6 +35,10 @@ export default function SignupPage() {
 
   const [emailCheck, setEmailCheck] = useState<boolean>(false);
 
+  const [emailSendLoading, setEmailSendLoading] = useState<boolean>(false);
+
+  const [emailCheckLoaing, setEmailCheckLoading] = useState<boolean>(false);
+
   return (
     <Container>
       <Center
@@ -49,8 +54,9 @@ export default function SignupPage() {
             이메일
           </Text>
           <form
-            onSubmit={emailHandleSubmit((data) => {
-              axios
+            onSubmit={emailHandleSubmit(async (data) => {
+              setEmailSendLoading(true);
+              await axios
                 .post("http://3.39.104.241:8080" + "/api/v1/mailSend", {
                   email: data.email,
                 })
@@ -67,6 +73,7 @@ export default function SignupPage() {
                   });
                   console.log(e);
                 });
+              setEmailSendLoading(false);
             })}
           >
             <Flex gap={1}>
@@ -83,7 +90,6 @@ export default function SignupPage() {
                     })}
                     placeholder={"example@kdquiz.com"}
                     w={"210px"}
-                    onChange={() => errors.email}
                     fontSize={["sm", null, "md"]}
                   />
                 )}
@@ -99,17 +105,21 @@ export default function SignupPage() {
                 color={"primary"}
                 type={"submit"}
                 onClick={() => {
-                  if (emailCheck && email) {
-                    setEmailSendCheck(false);
+                  if (emailCheck && emailSendCheck) {
                     setEmailCheck(false);
+                    setEmailSendCheck(false);
                   }
                 }}
               >
-                {emailCheck
-                  ? "재입력"
-                  : emailSendCheck
-                    ? "재발송"
-                    : "코드 발송"}
+                {emailSendLoading ? (
+                  <Spin />
+                ) : emailCheck ? (
+                  "재입력"
+                ) : emailSendCheck ? (
+                  "재발송"
+                ) : (
+                  "코드 발송"
+                )}
               </Button>
             </Flex>
           </form>
@@ -127,8 +137,9 @@ export default function SignupPage() {
             인증코드
           </Text>
           <form
-            onSubmit={codeHandleSubmit((data) => {
-              axios
+            onSubmit={codeHandleSubmit(async (data) => {
+              setEmailCheckLoading(true);
+              await axios
                 .post("http://3.39.104.241:8080" + "/api/v1/mailAuthCheck", {
                   email: email,
                   code: data.code,
@@ -145,6 +156,7 @@ export default function SignupPage() {
                   });
                   console.log(e);
                 });
+              setEmailCheckLoading(false);
             })}
           >
             <Flex gap={1}>
@@ -158,7 +170,6 @@ export default function SignupPage() {
                       disabled={emailCheck}
                       fontSize={["sm", null, "md"]}
                       placeholder={"00000"}
-                      onChange={() => errors.code}
                       borderRight={0}
                       borderRadius={"6px 0 0 6px"}
                       maxLength={6}
@@ -171,7 +182,7 @@ export default function SignupPage() {
                       border={"1px mainText"}
                       fontSize={["sm", null, "md"]}
                     >
-                      5 : 00
+                      <Timer stop={emailSendCheck ? emailCheck : true} />
                     </Center>
                   </Flex>
                 )}
@@ -188,12 +199,12 @@ export default function SignupPage() {
                 fontSize={["sm", null, "md"]}
                 color={"primary"}
               >
-                인증하기
+                {emailCheckLoaing ? <Spin /> : "인증하기"}
               </Button>
             </Flex>
           </form>
           <Flex transition={"0.25s"} h={["20px", null, "30px"]} ml={2}>
-            {errors.code && (
+            {codeErrors.code && (
               <Text color={"error"} fontSize={["2xs", null, "xs"]}>
                 코드를 다시 입력해주세요
               </Text>
@@ -215,9 +226,9 @@ export default function SignupPage() {
                   <Input
                     px={2}
                     {...field}
+                    {...register("pw", { required: true })}
                     type={"password"}
                     fontSize={["sm", null, "md"]}
-                    onChange={() => errors.pw}
                     w={["270px", null, "300px"]}
                   />
                 )}
@@ -243,6 +254,7 @@ export default function SignupPage() {
                   <Input
                     px={2}
                     {...field}
+                    {...register("pwConfirm", { required: true })}
                     type={"password"}
                     fontSize={["sm", null, "md"]}
                     onChange={() => errors.pwConfirm}
