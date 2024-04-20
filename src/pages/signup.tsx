@@ -6,11 +6,13 @@ import { useState } from "react";
 import axios from "axios";
 import { notification, Spin } from "antd";
 import { Timer } from "@/components/Timer.tsx";
+import { useNavigate } from "react-router-dom";
 
 export default function SignupPage() {
   const {
     register,
     control,
+    setError,
     handleSubmit,
     formState: { errors },
   } = useForm();
@@ -18,6 +20,7 @@ export default function SignupPage() {
   const {
     register: emailRegister,
     control: emailControl,
+    setError: setEmailError,
     handleSubmit: emailHandleSubmit,
     formState: { errors: emailErrors },
   } = useForm();
@@ -25,6 +28,7 @@ export default function SignupPage() {
   const {
     register: codeRegister,
     control: codeControl,
+    setError: setCodeError,
     handleSubmit: codeHandleSubmit,
     formState: { errors: codeErrors },
   } = useForm();
@@ -38,6 +42,10 @@ export default function SignupPage() {
   const [emailSendLoading, setEmailSendLoading] = useState<boolean>(false);
 
   const [emailCheckLoaing, setEmailCheckLoading] = useState<boolean>(false);
+
+  const [signinLoading, setSigninLoading] = useState<boolean>(false);
+
+  const navigate = useNavigate();
 
   return (
     <Container>
@@ -142,7 +150,7 @@ export default function SignupPage() {
               await axios
                 .post("http://3.39.104.241:8080" + "/api/v1/mailAuthCheck", {
                   email: email,
-                  code: data.code,
+                  authNum: data.code,
                 })
                 .then(() => {
                   notification.success({
@@ -212,8 +220,39 @@ export default function SignupPage() {
           </Flex>
         </Flex>
         <form
-          onSubmit={handleSubmit((data) => {
-            console.log(data);
+          onSubmit={handleSubmit(async (data) => {
+            if (!emailSendCheck) {
+              setEmailError("email", { type: "required" });
+              return;
+            }
+            if (!emailCheck) {
+              setCodeError("code", { type: "required" });
+              return;
+            }
+            if (data.pw !== data.pwConfirm) {
+              setError("pwConfirm", { type: "required" });
+              return;
+            }
+            setSigninLoading(true);
+            await axios
+              .post("http://3.39.104.241:8080" + "/api/v1/users/register", {
+                email: email,
+                password: data.pw,
+                nickname: "string",
+              })
+              .then(() => {
+                notification.success({
+                  message: "회원가입 되었습니다.",
+                });
+                navigate("/login");
+              })
+              .catch((e) => {
+                notification.error({
+                  message: "회원가입 실패했습니다.",
+                });
+                console.log(e);
+              });
+            setSigninLoading(false);
           })}
         >
           <Flex flexDir={"column"}>
@@ -283,7 +322,7 @@ export default function SignupPage() {
               bg={"primary"}
               color={"white"}
             >
-              가입하기!
+              {signinLoading ? <Spin /> : "가입하기!"}
             </Button>
           </Center>
         </form>
