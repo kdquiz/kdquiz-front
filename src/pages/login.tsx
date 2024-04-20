@@ -2,7 +2,6 @@ import Container from "@/components/layout/Container.tsx";
 import { Text, Center, Flex, Link, Input } from "@chakra-ui/react";
 import Button from "@/components/Button.tsx";
 import { Controller, useForm } from "react-hook-form";
-import { useState } from "react";
 
 export default function LoginPage() {
   const {
