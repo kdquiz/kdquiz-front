@@ -140,9 +140,11 @@ export default function LoginPage() {
                 fontSize={["md", null, "xl"]}
                 h={["30px", null, "40px"]}
                 borderRadius={"6px"}
-                bg={"primary"}
+                bg={loading ? "white" : "primary"}
                 color={"white"}
                 type={"submit"}
+                border={"2px"}
+                borderColor={"primary"}
               >
                 {loading ? <Spin /> : "로그인"}
               </Button>

@@ -15,7 +15,7 @@ export default function MyPage() {
   const sort = searchParams.get("sort") ?? "Latest";
 
   return (
-    <Center w={"100%"} h={"100%"} bg={"white"}>
+    <Center w={"100%"} h={"100%"}>
       <Center
         w={["100%", null, null, "80%", "60%"]}
         h={"100%"}
