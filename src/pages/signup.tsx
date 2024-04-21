@@ -326,8 +326,15 @@ export default function SignupPage() {
                 fontSize={["md", null, "xl"]}
                 h={["30px", null, "40px"]}
                 borderRadius={"6px"}
-                bg={"primary"}
+                bg={signinLoading ? "white" : "primary"}
                 color={"white"}
+                border={"2px"}
+                borderColor={"primary"}
+                onClick={() => {
+                  if (!emailSendCheck)
+                    setEmailError("email", { type: "required" });
+                  if (!emailCheck) setCodeError("code", { type: "required" });
+                }}
               >
                 {signinLoading ? <Spin /> : "가입하기!"}
               </Button>
