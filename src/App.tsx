@@ -6,7 +6,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
-import { Center } from "@chakra-ui/react";
+import DefaultLayout from "@/components/layout/DefaultLayout.tsx";
 
 interface RouteCommon {
   loader?: LoaderFunction;
@@ -49,30 +49,26 @@ for (const path of Object.keys(pages)) {
 const router = createBrowserRouter(
   routes.map(({ Element, ErrorBoundary, ...rest }) => ({
     ...rest,
-    element: <Element />,
+    element: (
+      <DefaultLayout>
+        <AnimatePresence>
+          <motion.div
+            style={{ display: "flex", height: "100%", width: "100%" }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <Element />
+          </motion.div>
+        </AnimatePresence>
+      </DefaultLayout>
+    ),
     ...(ErrorBoundary && { errorElement: <ErrorBoundary /> }),
   })),
 );
 function App() {
-  return (
-    <Center
-      mt={["36px", null, "72px"]}
-      h={"100%"}
-      backgroundImage={"./images/main-bg.png"}
-      backgroundPosition={"center"}
-    >
-      <AnimatePresence>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <RouterProvider router={router} />
-        </motion.div>
-      </AnimatePresence>
-    </Center>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

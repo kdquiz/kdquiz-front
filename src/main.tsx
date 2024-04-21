@@ -5,9 +5,9 @@ import "./index.css";
 import theme from "./theme.ts";
 import { ChakraProvider } from "@chakra-ui/react";
 import { ConfigProvider } from "antd";
-import DefaultLayout from "@/components/layout/DefaultLayout.tsx";
 import { QueryClient, QueryClientProvider } from "react-query";
 const queryClient = new QueryClient();
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
@@ -20,9 +20,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             },
           }}
         >
-          <DefaultLayout>
-            <App />
-          </DefaultLayout>
+          <App />
         </ConfigProvider>
       </ChakraProvider>
     </QueryClientProvider>

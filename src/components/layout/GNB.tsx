@@ -1,7 +1,21 @@
 import { Center, Flex, Image, Link } from "@chakra-ui/react";
 import Button from "../Button";
+import { useCallback } from "react";
+import { notification } from "antd";
+import { useNavigate } from "react-router-dom";
 
 export default function GNB() {
+  const email = localStorage.getItem("email");
+
+  const navigate = useNavigate();
+
+  const logout = useCallback(() => {
+    localStorage.removeItem("email");
+    localStorage.removeItem("Authorization");
+    notification.warning({ message: "로그아웃 되었습니다." });
+    navigate("/");
+  }, [navigate]);
+
   return (
     <Flex
       w={"100%"}
@@ -17,25 +31,22 @@ export default function GNB() {
       </Link>
       <Center h={"100%"}>
         <Link
-          href={"/signup"}
+          href={email ? "/my" : "/signup"}
           style={{ height: "100%", textDecoration: "none" }}
         >
           <Button
-            w={["86px", null, "172px"]}
+            w={email ? "auto" : ["86px", null, "172px"]}
             bg={"subMain"}
-            fontSize={["md", null, "2xl"]}
+            fontSize={email ? ["xs", "md", "2xl"] : ["md", null, "2xl"]}
             color={"mainText"}
             fontWeight={"800"}
             h={"100%"}
             cursor={"pointer"}
           >
-            회원가입
+            {email ? email : "회원가입"}
           </Button>
         </Link>
-        <Link
-          href={"/login"}
-          style={{ height: "100%", textDecoration: "none" }}
-        >
+        {email ? (
           <Button
             w={["86px", null, "172px"]}
             bg={"primary"}
@@ -43,10 +54,27 @@ export default function GNB() {
             color={"subText"}
             fontWeight={"700"}
             h={"100%"}
+            onClick={logout}
           >
-            로그인
+            로그아웃
           </Button>
-        </Link>
+        ) : (
+          <Link
+            href={"/login"}
+            style={{ height: "100%", textDecoration: "none" }}
+          >
+            <Button
+              w={["86px", null, "172px"]}
+              bg={"primary"}
+              fontSize={["md", null, "2xl"]}
+              color={"subText"}
+              fontWeight={"700"}
+              h={"100%"}
+            >
+              로그인
+            </Button>
+          </Link>
+        )}
       </Center>
     </Flex>
   );
