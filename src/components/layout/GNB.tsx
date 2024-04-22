@@ -27,7 +27,7 @@ export default function GNB() {
       top={0}
     >
       <Link href={"/"}>
-        <Image src={"./images/main-logo.svg"} h={"100%"} />
+        <Image src={"/images/main-logo.svg"} h={"100%"} />
       </Link>
       <Center h={"100%"}>
         <Link

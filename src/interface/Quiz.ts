@@ -1,8 +1,10 @@
-import { Questions } from "@/interface/Questions.ts";
+import { Question } from "@/interface/Question.ts";
 
 export interface Quiz {
   id: number;
   title: string;
   type?: string;
-  questions?: Questions[];
+  update_at?: string;
+  create_at: string;
+  questions?: Question[];
 }
