@@ -52,7 +52,7 @@ export default function QuizDetailPage() {
 
   return (
     <Flex w={"100%"}>
-      <Flex w={"400px"} flexDir={"column"} h={"100%"}>
+      <Flex w={"400px"} flexDir={"column"} h={"100%"} bg={"white"}>
         {isLoading ? (
           <Loading />
         ) : isError ? (
@@ -124,7 +124,7 @@ export default function QuizDetailPage() {
               h={"100%"}
               flexDir={"column"}
               gap={10}
-              maxW={"1000px"}
+              maxW={["700px", null, null, "800px", "900px"]}
             >
               <Flex
                 border={"white"}
@@ -156,7 +156,7 @@ export default function QuizDetailPage() {
                       borderRadius={"24px"}
                       bg={"buttonBg" + (index + 1)}
                       w={"49%"}
-                      h={"120px"}
+                      h={"100px"}
                       boxShadow={[0, null, "-4px 4px 4px #646363"]}
                       position={"relative"}
                     >
@@ -202,7 +202,7 @@ export default function QuizDetailPage() {
           )
         )}
       </Center>
-      <Flex w={"400px"} p={5}>
+      <Flex w={"400px"} bg={"white"} h={"100%"} p={5}>
         {isLoading ? (
           <Loading />
         ) : isError ? (

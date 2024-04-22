@@ -323,7 +323,7 @@ export default function QuizList() {
                       m={[1, null, 3]}
                       w={"100%"}
                     >
-                      <Link href={"/my/quiz?id=" + v.id}>
+                      <Link href={"/quiz?id=" + v.id}>
                         <Text
                           fontSize={["md", null, "xl", "3xl"]}
                           color={"mainText"}
