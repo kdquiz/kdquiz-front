@@ -322,7 +322,7 @@ export default function SignupPage() {
             <Center>
               <Button
                 type="submit"
-                w={"160px"}
+                w={"100%"}
                 fontSize={["md", null, "xl"]}
                 h={["30px", null, "40px"]}
                 borderRadius={"6px"}

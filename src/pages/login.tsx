@@ -86,7 +86,6 @@ export default function LoginPage() {
                           /^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/,
                       })}
                       placeholder={"example@kdquiz.com"}
-                      w={["auto", null, "274px"]}
                       fontSize={["sm", null, "md"]}
                     />
                   )}
@@ -118,7 +117,6 @@ export default function LoginPage() {
                         required: true,
                       })}
                       type={"password"}
-                      w={["auto", null, "274px"]}
                       fontSize={["sm", null, "md"]}
                     />
                   )}
@@ -136,7 +134,7 @@ export default function LoginPage() {
             </Flex>
             <Center>
               <Button
-                w={"160px"}
+                w={"100%"}
                 fontSize={["md", null, "xl"]}
                 h={["30px", null, "40px"]}
                 borderRadius={"6px"}
