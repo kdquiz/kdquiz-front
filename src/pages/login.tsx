@@ -71,7 +71,7 @@ export default function LoginPage() {
               setLoading(false);
             })}
           >
-            <Flex flexDir={"column"} gap={1}>
+            <Flex flexDir={"column"} gap={1} maxW={"270px"}>
               <Text fontSize={["xl", null, "2xl"]} color={"mainText"}>
                 이메일
               </Text>

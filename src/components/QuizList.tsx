@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "react-query";
 import axios from "axios";
-import { Center, Flex, Image, Input, Text } from "@chakra-ui/react";
+import { Center, Flex, Image, Input, Link, Text } from "@chakra-ui/react";
 import Loading from "@/components/Loading.tsx";
 import Error from "@/components/Error.tsx";
 import { Quiz } from "@/interface/Quiz.ts";
@@ -8,14 +8,35 @@ import Button from "@/components/Button.tsx";
 import { useState } from "react";
 import { App, Modal, notification } from "antd";
 import { Controller, useForm } from "react-hook-form";
-import { FaTrashAlt, FaUserCircle } from "react-icons/fa";
-import { MdModeEditOutline } from "react-icons/md";
+import { FaTrashAlt } from "react-icons/fa";
+import {
+  MdAccessTimeFilled,
+  MdModeEditOutline,
+  MdSearch,
+} from "react-icons/md";
+import dayjs from "dayjs";
+import { useSearchParams } from "react-router-dom";
+
+const SORT_LIST = [
+  ["Time_desc", "최신순"],
+  ["Time_asc", "오래된순"],
+  ["desc", "오름차순"],
+  ["asc", "내림차순"],
+];
 
 export default function QuizList() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const sort = searchParams.get("sort") ?? "Time_desc";
+  const search = searchParams.get("search") ?? "";
+
   const { data, isLoading, isSuccess, isError, refetch } = useQuery(
     "quiz",
     () =>
-      axios.get(import.meta.env.VITE_API_URL + "/api/v1/quiz/user", {
+      axios.get(import.meta.env.VITE_API_URL + `/api/v1/quiz/user`, {
+        params: {
+          SortBy: sort,
+          searchTitle: search,
+        },
         headers: {
           Authorization: localStorage.getItem("Authorization"),
         },
@@ -51,6 +72,9 @@ export default function QuizList() {
     formState: { errors },
     handleSubmit,
   } = useForm();
+
+  const { control: searchControl, handleSubmit: searchHandleSubmit } =
+    useForm();
 
   const { mutate } = useMutation(
     async (v: any) => {
@@ -151,6 +175,103 @@ export default function QuizList() {
   if (data && isSuccess) {
     return (
       <>
+        <Flex
+          m={[0, null, 3, 5]}
+          justify={"flex-end"}
+          flexDir={["column", null, null, "row"]}
+          alignItems={"flex-end"}
+          gap={[2, null, 4]}
+        >
+          <Flex
+            boxShadow={["none", null, "-4px 4px 4px #646363"]}
+            borderRadius={"6px"}
+            w={["100%", null, null, "500px"]}
+          >
+            {SORT_LIST.map((v, index) => (
+              <Center
+                w={"25%"}
+                py={3}
+                fontSize={"md"}
+                borderLeftRadius={index === 0 ? "6px" : 0}
+                borderRightRadius={index === 3 ? "6px" : 0}
+                cursor={"pointer"}
+                borderRight={index !== 3 ? 0 : "2px"}
+                borderLeft={index === 0 ? "2px" : 0}
+                borderY={"2px"}
+                onClick={async () => {
+                  await searchParams.set("sort", v[0]);
+                  await setSearchParams(searchParams);
+                  refetch();
+                }}
+                transition={"0.25s"}
+                bg={v[0] === sort ? "primary" : "white"}
+                borderColor={"primary"}
+              >
+                <Center
+                  color={v[0] === sort ? "white" : "mainText"}
+                  fontSize={["sm", null, "md"]}
+                >
+                  {v[1]}
+                </Center>
+              </Center>
+            ))}
+          </Flex>
+          <Center>
+            <form
+              onSubmit={searchHandleSubmit(async (data) => {
+                await searchParams.set("search", data.title ?? "");
+                await setSearchParams(searchParams);
+                refetch();
+              })}
+            >
+              <Center
+                boxShadow={["none", null, "-4px 4px 4px #646363"]}
+                border="2px"
+                borderColor="primary"
+                borderRadius="6px"
+                h={["40px", null, null, "52px"]}
+              >
+                <Controller
+                  render={({ field }) => (
+                    <Input
+                      {...field}
+                      border="none"
+                      borderRadius="6px"
+                      h={"50px"}
+                      placeholder={"프로젝트명"}
+                      w="190px"
+                      py={3}
+                      defaultValue={search}
+                    />
+                  )}
+                  control={searchControl}
+                  name={"title"}
+                />
+
+                <Button
+                  bg="primary"
+                  _hover={{ bg: "white" }}
+                  border="1px"
+                  borderColor="primary"
+                  borderRadius="6px"
+                  h={["40px", null, null, "52px"]}
+                  type="submit"
+                  p={0}
+                  role="group"
+                  w={["40px", null, null, "52px"]}
+                >
+                  <Center
+                    _groupHover={{ color: "primary" }}
+                    color="subText"
+                    w="100%"
+                  >
+                    <MdSearch fontSize="24px" />
+                  </Center>
+                </Button>
+              </Center>
+            </form>
+          </Center>
+        </Flex>
         <Center m={[0, null, 3, 5]} flexDir={"column"} gap={4}>
           {data?.data.code === "Q102" ? (
             <Center>
@@ -202,26 +323,36 @@ export default function QuizList() {
                       m={[1, null, 3]}
                       w={"100%"}
                     >
-                      <Text
-                        fontSize={["md", null, "xl", "3xl"]}
-                        color={"mainText"}
-                        _hover={{ textDecoration: "underline" }}
-                        cursor={"pointer"}
-                      >
-                        {v.title}
-                      </Text>
+                      <Link href={"/my/quiz?id=" + v.id}>
+                        <Text
+                          fontSize={["md", null, "xl", "3xl"]}
+                          color={"mainText"}
+                          _hover={{ textDecoration: "underline" }}
+                          cursor={"pointer"}
+                        >
+                          {v.title}
+                        </Text>
+                      </Link>
                       <Flex gap={2} alignItems={"center"}>
                         <Center display={["none", null, "flex"]}>
-                          <FaUserCircle fontSize={"36px"} color={"#646363"} />
+                          <MdAccessTimeFilled
+                            fontSize={"36px"}
+                            color={"#646363"}
+                          />
                         </Center>
                         <Center display={["flex", null, "none"]}>
-                          <FaUserCircle fontSize={"24px"} color={"#646363"} />
+                          <MdAccessTimeFilled
+                            fontSize={"24px"}
+                            color={"#646363"}
+                          />
                         </Center>
                         <Text
                           fontSize={["sm", null, "md", "2xl"]}
                           color={"mainText"}
                         >
-                          {localStorage.getItem("email")}
+                          {dayjs(v.update_at ?? v.create_at).format(
+                            "YYYY-MM-DD HH:mm",
+                          )}
                         </Text>
                       </Flex>
                     </Flex>

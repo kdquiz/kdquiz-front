@@ -1,4 +1,4 @@
-export interface Questions {
+export interface Question {
   content: string;
   options: {
     useHint: boolean;
@@ -12,7 +12,7 @@ export interface Questions {
   choices: Choice[];
 }
 
-interface Choice {
+export interface Choice {
   content: string;
   isCorrect: boolean;
 }
