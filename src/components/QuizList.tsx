@@ -176,7 +176,6 @@ export default function QuizList() {
     return (
       <>
         <Flex
-          m={[0, null, 3, 5]}
           justify={"flex-end"}
           flexDir={["column", null, null, "row"]}
           alignItems={"flex-end"}
