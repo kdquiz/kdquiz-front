@@ -8,7 +8,7 @@ import {
   Select,
   Checkbox,
 } from "@chakra-ui/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import axios from "axios";
@@ -22,16 +22,38 @@ export default function QuizDetailPage() {
   const [searchParams] = useSearchParams();
 
   const quizId = Number(searchParams.get("id"));
+  const questionId = searchParams.get("questionId") ?? 0;
 
   const navigate = useNavigate();
 
-  const { data, isLoading, isError } = useQuery("question_detail", () =>
-    axios.get(import.meta.env.VITE_API_URL + "/api/v1/quiz/user/" + quizId, {
-      headers: {
-        Authorization: localStorage.getItem("Authorization"),
-      },
-    }),
+  const { data, isLoading, isError, refetch } = useQuery(
+    "question_detail",
+    () =>
+      axios.get(
+        import.meta.env.VITE_API_URL + "/api/v1/quiz/question/" + questionId,
+        {
+          headers: {
+            Authorization: localStorage.getItem("Authorization"),
+          },
+        },
+      ),
   );
+
+  const [questionData, setQuestionData] = useState(data);
+
+  useEffect(() => {
+    if (!quizId) navigate("/");
+  }, []);
+
+  useEffect(() => {
+    refetch();
+  }, [questionId, isLoading]);
+
+  useEffect(() => {
+    setQuestionData(data);
+  }, [isLoading, data]);
+
+  console.log(data);
 
   // const { mutate } = useMutation((data: any) =>
   //   axios.put(
@@ -44,10 +66,6 @@ export default function QuizDetailPage() {
   //     },
   //   ),
   // );
-
-  useEffect(() => {
-    if (!quizId) navigate("/");
-  }, []);
 
   return (
     <Flex w={"100%"}>
@@ -64,7 +82,7 @@ export default function QuizDetailPage() {
         ) : isError ? (
           <Error />
         ) : (
-          data && (
+          questionData && (
             <Center
               p={6}
               w={"100%"}
@@ -81,7 +99,7 @@ export default function QuizDetailPage() {
                 boxShadow={[0, null, "-2px 2px 2px #646363"]}
               >
                 <Input
-                  defaultValue={data.data.content}
+                  defaultValue={questionData.data.data.content}
                   fontSize={"2xl"}
                   color={"mainText"}
                   textAlign={"center"}
@@ -97,7 +115,7 @@ export default function QuizDetailPage() {
                 justify={"space-between"}
                 rowGap={5}
               >
-                {data.data.choices.map((v: any, index: number) => (
+                {questionData.data.data.choices.map((v: any, index: number) => (
                   <Center
                     borderRadius={"24px"}
                     bg={"buttonBg" + (index + 1)}

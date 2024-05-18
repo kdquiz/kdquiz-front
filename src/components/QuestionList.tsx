@@ -4,12 +4,13 @@ import { Center, Flex, Text } from "@chakra-ui/react";
 import { FaTrashAlt } from "react-icons/fa";
 import { MdAddCircleOutline } from "react-icons/md";
 import { useMutation, useQuery } from "react-query";
-import axios from "axios/index";
+import axios from "axios";
 import { useSearchParams } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function QuestionList({ quizId }: { quizId: number }) {
   const [searchParams, setSearchParams] = useSearchParams();
-  const number = searchParams.get("number") ?? 0;
+  const questionId = searchParams.get("questionId") ?? 0;
 
   const { data, isLoading, isError, isSuccess } = useQuery("quiz_detail", () =>
     axios.get(import.meta.env.VITE_API_URL + "/api/v1/quiz/user/" + quizId, {
@@ -18,6 +19,13 @@ export default function QuestionList({ quizId }: { quizId: number }) {
       },
     }),
   );
+
+  useEffect(() => {
+    if (isSuccess && data) {
+      searchParams.set("questionId", data.data.data.questions[0].id);
+      setSearchParams(searchParams);
+    }
+  }, [isSuccess]);
 
   const { mutate: create } = useMutation(() =>
     axios.post(
@@ -68,6 +76,9 @@ export default function QuestionList({ quizId }: { quizId: number }) {
     axios.delete(import.meta.env.VITE_API_URL + "/api/v1/quiz/question/" + key),
   );
 
+  console.log(data);
+  console.log(data?.data.data.questions);
+
   return (
     <Flex minW={"200px"} flexDir={"column"} h={"100%"} bg={"white"}>
       {isLoading ? (
@@ -77,17 +88,22 @@ export default function QuestionList({ quizId }: { quizId: number }) {
       ) : (
         data &&
         isSuccess &&
-        data.data.data.map((v: any, index: number) => (
+        data.data.data.questions.map((v: any, index: number) => (
           <Center flexDir={"column"} w={"100%"} p={2} gap={1}>
-            <Text fontSize={"md"} color={"mainText"} w={"100%"}>
+            <Text
+              fontSize={"md"}
+              color={Number(questionId) === v.id ? "primary" : "mainText"}
+              w={"100%"}
+            >
               {index + 1}.
             </Text>
             <Flex w={"100%"} gap={2} role={"group"}>
               <Center
                 onClick={() => {
-                  searchParams.set("number", String(index));
+                  searchParams.set("questionId", v.id);
                   setSearchParams(searchParams);
                 }}
+                transition={"0.25s"}
                 cursor={"pointer"}
                 w={"150px"}
                 h={"100px"}
@@ -97,7 +113,9 @@ export default function QuestionList({ quizId }: { quizId: number }) {
                 bgSize={"cover"}
                 overflow={"hidden"}
                 border={"4px"}
-                borderColor={Number(number) === index ? "primary" : "mainText"}
+                borderColor={
+                  Number(questionId) === v.id ? "primary" : "mainText"
+                }
               >
                 <Text
                   textAlign={"center"}
