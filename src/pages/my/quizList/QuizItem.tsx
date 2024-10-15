@@ -52,7 +52,7 @@ export function QuizItem({
             m={[1, null, 3]}
             w={"100%"}
           >
-            <Link href={"/quiz?id=" + id}>
+            <Link href={"/quiz?quiz-id=" + id}>
               <Text
                 fontSize={["md", null, "xl", "3xl"]}
                 color={"mainText"}
