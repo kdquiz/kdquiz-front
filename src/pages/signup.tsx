@@ -1,4 +1,3 @@
-import Container from "@/components/layout/Container.tsx";
 import { Text, Center, Flex, Input } from "@chakra-ui/react";
 import Button from "@/components/Button.tsx";
 import { Controller, useForm } from "react-hook-form";
@@ -7,6 +6,7 @@ import axios from "axios";
 import { notification, Spin } from "antd";
 import { Timer } from "@/components/Timer.tsx";
 import { useNavigate } from "react-router-dom";
+import { SignUpInContainer } from "@/components/layout/SignUpInContainer.tsx";
 
 export default function SignupPage() {
   const {
@@ -49,7 +49,7 @@ export default function SignupPage() {
 
   return (
     <Center w={"100%"}>
-      <Container>
+      <SignUpInContainer>
         <Center
           w={["300px", null, "450px"]}
           h={["500px", null, "620px"]}
@@ -341,7 +341,7 @@ export default function SignupPage() {
             </Center>
           </form>
         </Center>
-      </Container>
+      </SignUpInContainer>
     </Center>
   );
 }

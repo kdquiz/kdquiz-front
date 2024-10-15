@@ -1,5 +1,5 @@
 import { Center, Flex, Text } from "@chakra-ui/react";
-import QuizList from "@/components/QuizList.tsx";
+import { QuizList } from "@/pages/my/quizList/QuizList.tsx";
 
 export default function MyPage() {
   return (

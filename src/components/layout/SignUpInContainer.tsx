@@ -1,7 +1,7 @@
 import { Center, Flex } from "@chakra-ui/react";
 import { ReactNode } from "react";
 
-export default function Container({ children }: { children: ReactNode }) {
+export function SignUpInContainer({ children }: { children: ReactNode }) {
   return (
     <Center
       flexDir={"column"}
