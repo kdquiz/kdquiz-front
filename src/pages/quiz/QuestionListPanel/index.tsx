@@ -1,25 +1,44 @@
 import Loading from "@/components/Loading.tsx";
 import Error from "@/components/Error.tsx";
 import { Box, Center, Flex, Text } from "@chakra-ui/react";
-import { FaPlus } from "react-icons/fa";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import axios from "axios";
 import { useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
 import { QuestionDeleteButton } from "@/pages/quiz/QuestionListPanel/QuestionDeleteButton.tsx";
+import { MdAddCircleOutline } from "react-icons/md";
 
 export function QuestionListPanel() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const quizId = searchParams.get("quiz-id");
-  const id = searchParams.get("id") ?? 0;
+  const id = Number(searchParams.get("id")) ?? 0;
 
-  const { data, isLoading, isError, isSuccess } = useQuery("quiz_detail", () =>
-    axios.get(import.meta.env.VITE_API_URL + "/api/v1/quiz/" + quizId, {
-      headers: {
-        Authorization: localStorage.getItem("Authorization"),
-      },
-    }),
+  const { data, isLoading, isError, isSuccess, refetch } = useQuery(
+    "questionList",
+    () =>
+      axios.get(import.meta.env.VITE_API_URL + "/api/v1/quiz/" + quizId, {
+        headers: {
+          Authorization: localStorage.getItem("Authorization"),
+        },
+      }),
+  );
+
+  const { mutate: createQuestion } = useMutation(
+    async () => {
+      await axios.post(
+        import.meta.env.VITE_API_URL + "/api/v1/question/" + quizId,
+        {},
+        {
+          headers: {
+            Authorization: localStorage.getItem("Authorization"),
+          },
+        },
+      );
+    },
+    {
+      onSuccess: () => refetch(),
+    },
   );
 
   useEffect(() => {
@@ -37,6 +56,7 @@ export function QuestionListPanel() {
       bg={"white"}
       pos={"fixed"}
       overflowY={"scroll"}
+      pb={"100px"}
     >
       {isLoading ? (
         <Loading />
@@ -46,14 +66,14 @@ export function QuestionListPanel() {
         data &&
         isSuccess &&
         data.data.data.questions.map((v: any, index: number) => (
-          <Center flexDir={"column"} w={"100%"} p={4} gap={1}>
+          <Center flexDir={"column"} w={"100%"} p={4} gap={1} key={index}>
             <Text fontSize={"xl"} color={"mainText"} w={"100%"}>
               {index + 1}.
             </Text>
             <Flex w={"100%"} gap={2}>
               <Center
                 onClick={() => {
-                  searchParams.set("question-id", String(v.id));
+                  searchParams.set("id", String(v.id));
                   setSearchParams(searchParams);
                 }}
                 cursor={"pointer"}
@@ -80,18 +100,25 @@ export function QuestionListPanel() {
               </Center>
               <Flex flexDir={"column"}>
                 {data.data.data.questions.length !== 1 && (
-                  <QuestionDeleteButton id={Number(id)} />
+                  <QuestionDeleteButton
+                    id={Number(v.id)}
+                    initId={data.data.data.questions[0].id}
+                  />
                 )}
               </Flex>
             </Flex>
           </Center>
         ))
       )}
-      <Box textAlign={"center"}>
-        <Center borderRadius={"100%"} bg={"gray"} w={"fit-content"}>
-          <FaPlus fontSize={"24px"} />
-        </Center>
-      </Box>
+      <Center borderRadius={"100%"}>
+        <MdAddCircleOutline
+          fontSize={"30px"}
+          cursor={"pointer"}
+          onClick={() => {
+            createQuestion();
+          }}
+        />
+      </Center>
     </Box>
   );
 }

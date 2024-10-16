@@ -60,7 +60,7 @@ export function QuizList() {
             </Center>
           ) : (
             data.data.data.map((v: Quiz) => (
-              <QuizItem {...v} setSelectId={setSelectId} />
+              <QuizItem {...v} setSelectId={setSelectId} key={v.id} />
             ))
           )}
           <Button

@@ -1,21 +1,43 @@
 import { FaTrashAlt } from "react-icons/fa";
 import { Center } from "@chakra-ui/react";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import axios from "axios";
+import { useSearchParams } from "react-router-dom";
 
-export function QuestionDeleteButton({ id }: { id: number }) {
-  const { mutate } = useMutation(() =>
-    axios.delete(import.meta.env.VITE_API_URL + "/api/v1/question/" + id, {
-      headers: {
-        Authorization: localStorage.getItem("Authorization"),
+export function QuestionDeleteButton({
+  id,
+  initId,
+}: {
+  id: number;
+  initId: number;
+}) {
+  const queryClient = useQueryClient();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const questionIid = Number(searchParams.get("id"));
+
+  const { mutate } = useMutation(
+    () =>
+      axios.delete(import.meta.env.VITE_API_URL + "/api/v1/question/" + id, {
+        headers: {
+          Authorization: localStorage.getItem("Authorization"),
+        },
+      }),
+    {
+      onSuccess: () => {
+        if (questionIid === id) {
+          searchParams.set("id", String(initId));
+          setSearchParams(searchParams);
+        }
+        queryClient.invalidateQueries({ queryKey: "questionList" });
       },
-    }),
+    },
   );
 
   return (
     <Center
       onClick={() => {
-        mutate;
+        mutate();
       }}
       cursor={"pointer"}
     >
