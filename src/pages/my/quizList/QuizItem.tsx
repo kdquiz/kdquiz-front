@@ -22,12 +22,12 @@ export function QuizItem({
       bg={"primary"}
       p={"0 16px 16px 0"}
       w={"100%"}
-      boxShadow={["none", null, "-4px 4px 4px #646363"]}
+      boxShadow={["none", null, "4px 4px 4px #646363"]}
       _hover={{
         boxShadow: "0px 0px 0px #646363",
       }}
       _active={{
-        boxShadow: "inset -2px 2px 2px #646363, 0px 0px 0px #646363",
+        boxShadow: "inset 2px 2px 2px #646363, 0px 0px 0px #646363",
       }}
       transition={"0.25s"}
     >

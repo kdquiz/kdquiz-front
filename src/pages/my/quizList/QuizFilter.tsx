@@ -15,7 +15,7 @@ export function QuizFilter() {
   const client = useQueryClient();
   return (
     <Flex
-      boxShadow={["none", null, "-4px 4px 4px #646363"]}
+      boxShadow={["none", null, "4px 4px 4px #646363"]}
       borderRadius={"6px"}
       w={["100%", null, null, "500px"]}
     >

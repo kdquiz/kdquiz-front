@@ -46,7 +46,7 @@ export function QuestionDetail() {
               bg={"white"}
               w={"100%"}
               borderRadius={"24px"}
-              boxShadow={[0, null, "-2px 2px 2px #646363"]}
+              boxShadow={[0, null, "2px 2px 2px #646363"]}
             >
               <Input
                 // defaultValue={data?.data.data.questions[number].content}

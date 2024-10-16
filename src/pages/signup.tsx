@@ -66,7 +66,7 @@ export default function SignupPage() {
               onSubmit={emailHandleSubmit(async (data) => {
                 setEmailSendLoading(true);
                 await axios
-                  .post(import.meta.env.VITE_API_URL + "/api/v1/mailSend", {
+                  .post(import.meta.env.VITE_API_URL + "/api/v1/mailSend/", {
                     email: data.email,
                   })
                   .then(() => {

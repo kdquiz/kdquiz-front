@@ -24,7 +24,7 @@ export function QuizSearch() {
         })}
       >
         <Center
-          boxShadow={["none", null, "-4px 4px 4px #646363"]}
+          boxShadow={["none", null, "4px 4px 4px #646363"]}
           border="2px"
           borderColor="primary"
           borderRadius="6px"

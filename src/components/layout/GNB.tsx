@@ -22,7 +22,7 @@ export default function GNB() {
       h={["36px", null, "72px"]}
       justify={"space-between"}
       position={"absolute"}
-      boxShadow={"-2px 2px 2px #646363"}
+      boxShadow={"2px 2px 2px #646363"}
       bg={"white"}
       top={0}
     >

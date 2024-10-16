@@ -7,10 +7,10 @@ export default function Button({ ...props }: ButtonProps) {
       borderRadius={0}
       bg={"white"}
       _hover={{
-        boxShadow: "inset -2px 2px 2px #646363, 0px 0px 0px #646363",
+        boxShadow: "inset 2px 2px 2px #646363, 0px 0px 0px #646363",
       }}
       _active={{
-        boxShadow: "inset -5px 5px 2px #646363, 0px 0px 0px #646363",
+        boxShadow: "inset 5px 5px 2px #646363, 0px 0px 0px #646363",
       }}
       {...props}
     />

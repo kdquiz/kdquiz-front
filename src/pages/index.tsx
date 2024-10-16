@@ -9,7 +9,7 @@ export default function Index() {
       <Image
         src={"./images/main-logo.svg"}
         w={["300px", "500px", "800px"]}
-        boxShadow={"-2px 2px 2px #646363"}
+        boxShadow={"2px 2px 2px #646363"}
         backgroundSize={"cover"}
         borderRadius={["6px", null, "12px"]}
       />
