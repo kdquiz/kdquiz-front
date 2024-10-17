@@ -22,6 +22,7 @@ const theme = extendTheme({
     buttonBg8: "#5AFFD7",
     error: "#FF6363",
     select: "#DBDBDB",
+    gray: "#333333",
   },
   fonts: {
     heading: "TmoneyRoundWindExtraBold",

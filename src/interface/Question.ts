@@ -13,6 +13,8 @@ export interface Question {
 }
 
 export interface Choice {
+  id: number;
   content: string;
   isCorrect: boolean;
+  shortAnswer: string;
 }

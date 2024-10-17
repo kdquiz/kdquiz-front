@@ -53,39 +53,6 @@ export function QuizTitleModal({
         import.meta.env.VITE_API_URL + "/api/v1/quiz/",
         {
           title: data.title,
-          type: "string",
-          questions: [
-            {
-              content: "문제1",
-              options: {
-                useHint: true,
-                hintTime: 30,
-                hintContent: "힌트",
-                useAiFeedback: true,
-                aiQuestion: "ai 피드백",
-                commentary: "코멘트 피드백",
-                score: 20,
-              },
-              choices: [
-                {
-                  content: "1",
-                  isCorrect: true,
-                },
-                {
-                  content: "2",
-                  isCorrect: false,
-                },
-                {
-                  content: "3",
-                  isCorrect: false,
-                },
-                {
-                  content: "4",
-                  isCorrect: false,
-                },
-              ],
-            },
-          ],
         },
         {
           headers: {

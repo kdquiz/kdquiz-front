@@ -7,9 +7,29 @@ import {
   Text,
   Textarea,
 } from "@chakra-ui/react";
+import { Form, useForm } from "react-hook-form";
+import { useQuery } from "react-query";
+import axios from "axios";
+import { useSearchParams } from "react-router-dom";
 
 export function QuestionSetPanel() {
+  // const [searchParams] = useSearchParams();
+  // const id = searchParams.get("id");
+
+  // const { control: questionSetControl, handleSubmit } = useForm();
+
+  // const { data, refetch } = useQuery("quizDetail", () =>
+  //   axios
+  //     .get(import.meta.env.VITE_API_URL + "/api/v1/question/" + id, {
+  //       headers: {
+  //         Authorization: localStorage.getItem("Authorization"),
+  //       },
+  //     })
+  //     .then((value) => value.data),
+  // );
+
   return (
+    // <Form control={questionSetControl}>
     <Box
       w={"300px"}
       bg={"white"}
@@ -25,7 +45,7 @@ export function QuestionSetPanel() {
           <Text fontSize={"2xl"} color={"mainText"}>
             퀴즈 유형
           </Text>
-          <Select defaultValue={0} color={"mainText"} size={"lg"}>
+          <Select defaultValue={0} color={"mainText"} size={"lg"} name={}>
             <option value={0}>객관식</option>
             <option value={1}>단답형</option>
           </Select>
@@ -104,5 +124,6 @@ export function QuestionSetPanel() {
         </Flex>
       </Flex>
     </Box>
+    // </Form>
   );
 }

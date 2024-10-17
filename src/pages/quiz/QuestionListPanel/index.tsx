@@ -110,9 +110,10 @@ export function QuestionListPanel() {
           </Center>
         ))
       )}
-      <Center borderRadius={"100%"}>
+      <Center>
         <MdAddCircleOutline
           fontSize={"30px"}
+          color={"gray"}
           cursor={"pointer"}
           onClick={() => {
             createQuestion();
