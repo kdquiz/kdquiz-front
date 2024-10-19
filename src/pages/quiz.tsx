@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/react";
-import { QuestionListPanel } from "@/pages/quiz/QuestionListPanel";
-import { QuestionSetPanel } from "./QuestionSetPanel.tsx";
-import { QuestionDetail } from "@/pages/quiz/QuestionDetail.tsx";
+import { QuestionListPanel } from "src/components/quiz/QuestionListPanel";
+import { QuestionSetPanel } from "../components/quiz/QuestionSetPanel.tsx";
+import { QuestionDetail } from "@/components/quiz/QuestionDetail.tsx";
 
 export default function QuizDetailPage() {
   return (

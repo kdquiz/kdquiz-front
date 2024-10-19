@@ -1,7 +1,7 @@
 import { Center, Flex, Image, Link, Text } from "@chakra-ui/react";
 import { MdAccessTimeFilled, MdModeEditOutline } from "react-icons/md";
 import dayjs from "dayjs";
-import { QuizDeleteButton } from "@/pages/my/QuizDeleteButton.tsx";
+import { QuizDeleteButton } from "@/components/QuizDeleteButton.tsx";
 import Button from "@/components/Button.tsx";
 import { Quiz } from "@/interface/Quiz.ts";
 import { Dispatch, SetStateAction } from "react";

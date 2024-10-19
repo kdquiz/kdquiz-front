@@ -5,7 +5,7 @@ import { useMutation, useQuery } from "react-query";
 import axios from "axios";
 import { useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
-import { QuestionDeleteButton } from "@/pages/quiz/QuestionListPanel/QuestionDeleteButton.tsx";
+import { QuestionDeleteButton } from "@/components/quiz/QuestionListPanel/QuestionDeleteButton.tsx";
 import { MdAddCircleOutline } from "react-icons/md";
 
 export function QuestionListPanel() {

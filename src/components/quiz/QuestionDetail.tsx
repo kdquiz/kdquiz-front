@@ -2,10 +2,10 @@ import { Box, Center, Flex, Grid, Image, Input } from "@chakra-ui/react";
 import { useQuery } from "react-query";
 import axios from "axios";
 import { useSearchParams } from "react-router-dom";
-import { ChoiceItem } from "@/pages/quiz/Choice/ChoiceItem.tsx";
+import { ChoiceItem } from "@/components/quiz/Choice/ChoiceItem.tsx";
 import { useEffect } from "react";
 import { Skeleton } from "antd";
-import { ChoiceAddButton } from "@/pages/quiz/ChoiceAddButton.tsx";
+import { ChoiceAddButton } from "@/components/quiz/ChoiceAddButton.tsx";
 
 export function QuestionDetail() {
   const [searchParams] = useSearchParams();
