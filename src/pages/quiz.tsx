@@ -1,5 +1,5 @@
 import { Box } from "@chakra-ui/react";
-import { QuestionListPanel } from "src/components/quiz/QuestionListPanel";
+import { QuestionListPanel } from "@/components/quiz/QuestionListPanel/QuestionListPanel.tsx";
 import { QuestionSetPanel } from "../components/quiz/QuestionSetPanel.tsx";
 import { QuestionDetail } from "@/components/quiz/QuestionDetail.tsx";
 
