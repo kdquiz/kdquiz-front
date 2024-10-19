@@ -1,7 +1,7 @@
 import { Center, Flex, Input } from "@chakra-ui/react";
 import { Choice } from "@/interface/Question.ts";
-import { ChoiceDeleteButton } from "@/components/quiz/Choice/ChoiceDeleteButton.tsx";
-import { ChoiceCorrectButton } from "@/components/quiz/Choice/ChoiceCorrectButton.tsx";
+import { ChoiceDeleteButton } from "@/pages/quiz/Choice/ChoiceDeleteButton.tsx";
+import { ChoiceCorrectButton } from "@/pages/quiz/Choice/ChoiceCorrectButton.tsx";
 
 export function ChoiceItem({
   id,

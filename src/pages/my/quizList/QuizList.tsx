@@ -7,10 +7,10 @@ import { Quiz } from "@/interface/Quiz.ts";
 import Button from "@/components/Button.tsx";
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { QuizItem } from "@/components/quizList/QuizItem.tsx";
-import { QuizTitleModal } from "@/components/quizList/QuizTitleModal.tsx";
-import { QuizFilter } from "@/components/quizList/QuizFilter.tsx";
-import { QuizSearch } from "@/components/quizList/QuizSearch.tsx";
+import { QuizItem } from "@/pages/my/quizList/QuizItem.tsx";
+import { QuizTitleModal } from "@/pages/my/quizList/QuizTitleModal.tsx";
+import { QuizFilter } from "@/pages/my/quizList/QuizFilter.tsx";
+import { QuizSearch } from "@/pages/my/quizList/QuizSearch.tsx";
 
 export function QuizList() {
   const [searchParams] = useSearchParams();
