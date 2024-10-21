@@ -18,7 +18,7 @@ export function QuestionSetPanel() {
 
   const { control: questionSetControl } = useForm();
 
-  const { data } = useQuery("quizDetail", () =>
+  const { data, isLoading, isError } = useQuery("quizDetail", () =>
     axios
       .get(import.meta.env.VITE_API_URL + "/api/v1/question/" + id, {
         headers: {
@@ -28,10 +28,10 @@ export function QuestionSetPanel() {
       .then((value) => value.data),
   );
 
-  console.log(data);
+  if (isLoading || isError) return null;
 
   return (
-    <Form control={questionSetControl}>
+    <Form control={questionSetControl} defaultValue={data}>
       <Box
         w={"300px"}
         bg={"white"}
@@ -55,6 +55,7 @@ export function QuestionSetPanel() {
                 </Select>
               )}
               name={"type"}
+              control={questionSetControl}
             />
           </Flex>
           <Flex flexDir={"column"} gap={2}>
@@ -72,6 +73,7 @@ export function QuestionSetPanel() {
                 />
               )}
               name={"option.time"}
+              control={questionSetControl}
             />
           </Flex>
           <Flex flexDir={"column"} gap={2}>
@@ -89,6 +91,7 @@ export function QuestionSetPanel() {
                 />
               )}
               name={"option.score"}
+              control={questionSetControl}
             />
           </Flex>
           {/*<Flex gap={2} justify={"space-between"}>*/}
@@ -111,6 +114,7 @@ export function QuestionSetPanel() {
                 <Checkbox color={"primary"} size={"lg"} {...field} />
               )}
               name={"options.useHint"}
+              control={questionSetControl}
             />
           </Flex>
           <Flex flexDir={"column"} gap={2}>
@@ -128,6 +132,7 @@ export function QuestionSetPanel() {
                 />
               )}
               name={"options.hintTime"}
+              control={questionSetControl}
             />
           </Flex>
           <Flex flexDir={"column"} gap={2}>
@@ -144,6 +149,7 @@ export function QuestionSetPanel() {
                 />
               )}
               name={"options.hintContent"}
+              control={questionSetControl}
             />
           </Flex>
           {/*<Flex gap={2} justify={"space-between"}>*/}
@@ -172,6 +178,7 @@ export function QuestionSetPanel() {
                 />
               )}
               name={"options.commentary"}
+              control={questionSetControl}
             />
           </Flex>
         </Flex>

@@ -21,7 +21,7 @@ export function ChoiceDeleteButton({ id }: { id: number }) {
   );
 
   return (
-    <Center onClick={() => deleteChoice()} cursor={"pointer"}>
+    <Center onClick={() => deleteChoice()} cursor={"pointer"} opacity={"70%"}>
       <FaTrashAlt fontSize={"36px"} color={"#646363"} />
     </Center>
   );

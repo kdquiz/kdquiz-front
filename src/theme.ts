@@ -14,7 +14,7 @@ const theme = extendTheme({
     subText: "#FFFFFF",
     buttonBg1: "#85AEFF",
     buttonBg2: "#FFBAF0",
-    buttonBg3: "#FFE81D",
+    buttonBg3: "#FFC11D",
     buttonBg4: "#AA76FF",
     buttonBg5: "#FF5656",
     buttonBg6: "#63CF61",

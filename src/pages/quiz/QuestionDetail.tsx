@@ -1,11 +1,13 @@
-import { Box, Center, Flex, Grid, Image, Input } from "@chakra-ui/react";
+import { Box, Center, Flex, Grid, Image } from "@chakra-ui/react";
 import { useQuery } from "react-query";
 import axios from "axios";
 import { useSearchParams } from "react-router-dom";
 import { ChoiceItem } from "@/pages/quiz/Choice/ChoiceItem.tsx";
-import { useEffect } from "react";
-import { Skeleton } from "antd";
+import { Skeleton, Spin } from "antd";
 import { ChoiceAddButton } from "@/pages/quiz/ChoiceAddButton.tsx";
+import { QuestionTitle } from "@/pages/quiz/QuestionTitle.tsx";
+import { useEffect } from "react";
+import { Choice } from "@/interface/Question.ts";
 
 export function QuestionDetail() {
   const [searchParams] = useSearchParams();
@@ -22,7 +24,6 @@ export function QuestionDetail() {
   );
 
   useEffect(() => {
-    console.log();
     refetch();
   }, [id, refetch]);
 
@@ -50,16 +51,11 @@ export function QuestionDetail() {
           borderRadius={"24px"}
           boxShadow={[0, null, "2px 2px 2px #646363"]}
         >
-          <Input
-            defaultValue={data ? data?.content : ""}
-            fontSize={"5xl"}
-            color={"mainText"}
-            textAlign={"center"}
-            w={"100%"}
-            h={"100px"}
-            borderRadius={"24px"}
-            disabled={!data}
-          />
+          {data ? (
+            <QuestionTitle id={Number(id)} data={data} key={data.id} />
+          ) : (
+            <Spin />
+          )}
         </Flex>
         <Image src={"/images/img.png"} w={"80%"} />
         <Grid
@@ -68,7 +64,7 @@ export function QuestionDetail() {
           gridTemplateColumns={["repeat(1, 1fr)", null, "repeat(2, 1fr)"]}
         >
           {data ? (
-            data.choices.map((v: any, index: number) => (
+            data.choices.map((v: Choice, index: number) => (
               <ChoiceItem
                 {...v}
                 index={index}

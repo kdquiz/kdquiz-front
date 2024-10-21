@@ -150,7 +150,7 @@ export default function SignupPage() {
                 setEmailCheckLoading(true);
                 await axios
                   .post(
-                    import.meta.env.VITE_API_URL + "/api/v1/mailAuthCheck",
+                    import.meta.env.VITE_API_URL + "/api/v1/mailAuthCheck/",
                     {
                       email: email,
                       authNum: data.code,
@@ -243,10 +243,13 @@ export default function SignupPage() {
               }
               setSigninLoading(true);
               await axios
-                .post(import.meta.env.VITE_API_URL + "/api/v1/users/register", {
-                  email: email,
-                  password: data.pw,
-                })
+                .post(
+                  import.meta.env.VITE_API_URL + "/api/v1/users/register/",
+                  {
+                    email: email,
+                    password: data.pw,
+                  },
+                )
                 .then(() => {
                   notification.success({
                     message: "회원가입 되었습니다.",

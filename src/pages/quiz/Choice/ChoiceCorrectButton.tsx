@@ -35,7 +35,7 @@ export function ChoiceCorrectButton({
   );
 
   return (
-    <Center cursor={"pointer"} onClick={() => setIsCorrect()}>
+    <Center cursor={"pointer"} onClick={() => setIsCorrect()} opacity={"70%"}>
       <FaCheckCircle
         fontSize={"36px"}
         color={isCorrect ? "#FFFFFF" : "#646363"}

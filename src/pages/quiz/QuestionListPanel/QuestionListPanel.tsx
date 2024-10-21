@@ -4,7 +4,6 @@ import { Box, Center, Flex, Text } from "@chakra-ui/react";
 import { useMutation, useQuery } from "react-query";
 import axios from "axios";
 import { useSearchParams } from "react-router-dom";
-import { useEffect } from "react";
 import { QuestionDeleteButton } from "@/pages/quiz/QuestionListPanel/QuestionDeleteButton.tsx";
 import { MdAddCircleOutline } from "react-icons/md";
 
@@ -22,6 +21,13 @@ export function QuestionListPanel() {
           Authorization: localStorage.getItem("Authorization"),
         },
       }),
+    {
+      onSuccess: (data) => {
+        if (id) return;
+        searchParams.set("id", data?.data.data.questions[0].id);
+        setSearchParams(searchParams);
+      },
+    },
   );
 
   const { mutate: createQuestion } = useMutation(
@@ -40,13 +46,6 @@ export function QuestionListPanel() {
       onSuccess: () => refetch(),
     },
   );
-
-  useEffect(() => {
-    if (!id && !isLoading && !isError) {
-      searchParams.set("id", data?.data.data.questions[0].id);
-      setSearchParams(searchParams);
-    }
-  }, [data?.data.data, isError, isLoading, id, searchParams, setSearchParams]);
 
   return (
     <Box
