@@ -1,17 +1,23 @@
-import { Input } from "@chakra-ui/react";
+import { Select } from "@chakra-ui/react";
+import { Question } from "@/interface/Question.ts";
 import { useMutation, useQueryClient } from "react-query";
 import axios from "axios";
-import { Question } from "@/interface/Question.ts";
 
-export function QuestionTitle({ id, data }: { id: number; data: Question }) {
+export function QuestionTypeSelect({
+  id,
+  data,
+}: {
+  id: number;
+  data: Question;
+}) {
   const client = useQueryClient();
   const { mutate } = useMutation(
-    async (value: string) => {
+    async (value: number) => {
       return await axios.put(
         import.meta.env.VITE_API_URL + "/api/v1/question/" + id,
         {
           ...data,
-          content: value,
+          type: value,
         },
         {
           headers: {
@@ -23,22 +29,23 @@ export function QuestionTitle({ id, data }: { id: number; data: Question }) {
     {
       onSuccess: () => {
         client.invalidateQueries({ queryKey: "quizDetail" });
-        client.invalidateQueries({ queryKey: "questionList" });
       },
     },
   );
 
   return (
-    <Input
-      defaultValue={data ? data?.content : ""}
-      disabled={!data}
-      fontSize={"5xl"}
+    <Select
+      // defaultValue={type}
+      defaultValue={data.type}
       color={"mainText"}
-      textAlign={"center"}
-      w={"100%"}
-      h={"100px"}
-      borderRadius={"24px"}
-      onBlur={(event) => mutate(event.target.value)}
-    />
+      size={"lg"}
+      onChange={(event) => {
+        // setType(Number(event.target.value));
+        mutate(Number(event.target.value));
+      }}
+    >
+      <option value={0}>객관식</option>
+      <option value={1}>단답형</option>
+    </Select>
   );
 }

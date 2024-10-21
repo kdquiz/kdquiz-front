@@ -10,8 +10,10 @@ export function ChoiceItem({
   isCorrect,
   index,
   deleteAble,
+  unCorrectAble,
 }: Choice & {
   deleteAble?: boolean;
+  unCorrectAble?: boolean;
   index: number;
 }) {
   return (
@@ -24,7 +26,12 @@ export function ChoiceItem({
     >
       <ChoiceInput id={id} content={content} isCorrect={isCorrect} />
       <Flex position={"absolute"} right={2} gap={2}>
-        <ChoiceCorrectButton id={id} content={content} isCorrect={isCorrect} />
+        <ChoiceCorrectButton
+          id={id}
+          content={content}
+          isCorrect={isCorrect}
+          unCorrectAble={unCorrectAble}
+        />
         {deleteAble && <ChoiceDeleteButton id={id} />}
       </Flex>
     </Center>

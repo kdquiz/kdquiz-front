@@ -3,7 +3,13 @@ import { useMutation, useQueryClient } from "react-query";
 import axios from "axios";
 import { Question } from "@/interface/Question.ts";
 
-export function QuestionTitle({ id, data }: { id: number; data: Question }) {
+export function QuestionSubjectInput({
+  id,
+  data,
+}: {
+  id: number;
+  data: Question;
+}) {
   const client = useQueryClient();
   const { mutate } = useMutation(
     async (value: string) => {
@@ -11,7 +17,7 @@ export function QuestionTitle({ id, data }: { id: number; data: Question }) {
         import.meta.env.VITE_API_URL + "/api/v1/question/" + id,
         {
           ...data,
-          content: value,
+          shortAnswer: value,
         },
         {
           headers: {
@@ -30,7 +36,7 @@ export function QuestionTitle({ id, data }: { id: number; data: Question }) {
 
   return (
     <Input
-      defaultValue={data ? data?.content : ""}
+      defaultValue={data ? data?.shortAnswer : ""}
       disabled={!data}
       fontSize={"5xl"}
       color={"mainText"}

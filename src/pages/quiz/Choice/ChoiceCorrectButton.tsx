@@ -7,10 +7,12 @@ export function ChoiceCorrectButton({
   id,
   content,
   isCorrect,
+  unCorrectAble,
 }: {
   id: number;
   content: string;
   isCorrect: boolean;
+  unCorrectAble?: boolean;
 }) {
   const client = useQueryClient();
   const { mutate: setIsCorrect } = useMutation(
@@ -35,7 +37,13 @@ export function ChoiceCorrectButton({
   );
 
   return (
-    <Center cursor={"pointer"} onClick={() => setIsCorrect()} opacity={"70%"}>
+    <Center
+      cursor={"pointer"}
+      onClick={() =>
+        !isCorrect ? setIsCorrect() : !unCorrectAble && setIsCorrect()
+      }
+      opacity={"70%"}
+    >
       <FaCheckCircle
         fontSize={"36px"}
         color={isCorrect ? "#FFFFFF" : "#646363"}

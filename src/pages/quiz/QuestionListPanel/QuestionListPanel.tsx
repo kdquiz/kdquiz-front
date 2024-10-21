@@ -52,7 +52,7 @@ export function QuestionListPanel() {
       w={"300px"}
       flexDir={"column"}
       h={"100%"}
-      bg={"white"}
+      bg={"whitesmoke"}
       pos={"fixed"}
       overflowY={"scroll"}
       pb={"100px"}
