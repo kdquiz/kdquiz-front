@@ -1,5 +1,5 @@
 import { Input } from "@chakra-ui/react";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
 export function ChoiceInput({
@@ -13,8 +13,8 @@ export function ChoiceInput({
 }) {
   const client = useQueryClient();
 
-  const { mutate } = useMutation(
-    async (value: string) =>
+  const { mutate } = useMutation({
+    mutationFn: async (value: string) =>
       axios.put(
         import.meta.env.VITE_API_URL + "/api/v1/question/choice/",
         {
@@ -29,8 +29,8 @@ export function ChoiceInput({
           },
         },
       ),
-    { onSuccess: () => client.invalidateQueries({ queryKey: "quizDetail" }) },
-  );
+    onSuccess: () => client.invalidateQueries({ queryKey: ["quizDetail"] }),
+  });
   return (
     <Input
       borderRadius={"24px"}

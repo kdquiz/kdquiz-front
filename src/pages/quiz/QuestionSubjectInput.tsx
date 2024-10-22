@@ -1,5 +1,5 @@
 import { Input } from "@chakra-ui/react";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { Question } from "@/interface/Question.ts";
 
@@ -11,8 +11,8 @@ export function QuestionSubjectInput({
   data: Question;
 }) {
   const client = useQueryClient();
-  const { mutate } = useMutation(
-    async (value: string) => {
+  const { mutate } = useMutation({
+    mutationFn: async (value: string) => {
       return await axios.put(
         import.meta.env.VITE_API_URL + "/api/v1/question/" + id,
         {
@@ -26,13 +26,10 @@ export function QuestionSubjectInput({
         },
       );
     },
-    {
-      onSuccess: () => {
-        client.invalidateQueries({ queryKey: "quizDetail" });
-        client.invalidateQueries({ queryKey: "questionList" });
-      },
+    onSuccess: () => {
+      client.invalidateQueries({ queryKey: ["quizDetail", "questionList"] });
     },
-  );
+  });
 
   return (
     <Input

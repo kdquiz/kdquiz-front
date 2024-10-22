@@ -1,11 +1,11 @@
 import { MdAddCircleOutline } from "react-icons/md";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
 export function ChoiceAddButton({ questionId }: { questionId: number }) {
   const client = useQueryClient();
-  const { mutate: createChoice } = useMutation(
-    async () => {
+  const { mutate: createChoice } = useMutation({
+    mutationFn: async () => {
       await axios.post(
         import.meta.env.VITE_API_URL + "/api/v1/question/choice/" + questionId,
         {},
@@ -16,10 +16,8 @@ export function ChoiceAddButton({ questionId }: { questionId: number }) {
         },
       );
     },
-    {
-      onSuccess: () => client.invalidateQueries({ queryKey: "quizDetail" }),
-    },
-  );
+    onSuccess: () => client.invalidateQueries({ queryKey: ["quizDetail"] }),
+  });
 
   return (
     <MdAddCircleOutline

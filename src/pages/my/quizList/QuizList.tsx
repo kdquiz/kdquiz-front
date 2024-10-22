@@ -1,4 +1,4 @@
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Center, Flex, Text } from "@chakra-ui/react";
 import Loading from "@/components/Loading.tsx";
@@ -17,17 +17,19 @@ export function QuizList() {
   const sort = searchParams.get("sort") ?? "Time_desc";
   const search = searchParams.get("search") ?? "";
 
-  const { data, isLoading, isSuccess, isError } = useQuery("quizList", () =>
-    axios.get(import.meta.env.VITE_API_URL + `/api/v1/quiz/`, {
-      params: {
-        SortBy: sort,
-        searchTitle: search,
-      },
-      headers: {
-        Authorization: localStorage.getItem("Authorization"),
-      },
-    }),
-  );
+  const { data, isLoading, isSuccess, isError } = useQuery({
+    queryKey: ["quizList"],
+    queryFn: () =>
+      axios.get(import.meta.env.VITE_API_URL + `/api/v1/quiz/`, {
+        params: {
+          SortBy: sort,
+          searchTitle: search,
+        },
+        headers: {
+          Authorization: localStorage.getItem("Authorization"),
+        },
+      }),
+  });
 
   const [selectId, setSelectId] = useState<number | boolean>();
 

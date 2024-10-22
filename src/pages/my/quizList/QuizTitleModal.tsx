@@ -2,7 +2,7 @@ import { Center, Flex, Input, Text } from "@chakra-ui/react";
 import { Controller, useForm } from "react-hook-form";
 import Button from "@/components/Button.tsx";
 import { Modal, notification } from "antd";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { Dispatch, SetStateAction } from "react";
 
@@ -23,8 +23,8 @@ export function QuizTitleModal({
 
   const client = useQueryClient();
 
-  const { mutate } = useMutation(
-    async (v: any) => {
+  const { mutate } = useMutation({
+    mutationFn: async (v: any) => {
       await axios.put(
         import.meta.env.VITE_API_URL + "/api/v1/quiz/" + selectId,
         { title: v.title },
@@ -35,20 +35,18 @@ export function QuizTitleModal({
         },
       );
     },
-    {
-      onSuccess: async () => {
-        setSelectId(false);
-        client.invalidateQueries({ queryKey: "quizList" });
-        reset();
-        notification.success({ message: "퀴즈 이름 변경되었습니다." });
-      },
-      onError: () =>
-        notification.error({ message: "퀴즈 이름 변경에 실패했습니다." }),
+    onSuccess: async () => {
+      setSelectId(false);
+      client.invalidateQueries({ queryKey: ["quizList"] });
+      reset();
+      notification.success({ message: "퀴즈 이름 변경되었습니다." });
     },
-  );
+    onError: () =>
+      notification.error({ message: "퀴즈 이름 변경에 실패했습니다." }),
+  });
 
-  const { mutate: create } = useMutation(
-    async (data: any) => {
+  const { mutate: create } = useMutation({
+    mutationFn: async (data: any) => {
       await axios.post(
         import.meta.env.VITE_API_URL + "/api/v1/quiz/",
         {
@@ -61,16 +59,13 @@ export function QuizTitleModal({
         },
       );
     },
-    {
-      onSuccess: () => {
-        client.invalidateQueries({ queryKey: "quizList" });
-        setSelectId(false);
-        notification.success({ message: "퀴즈 생성에 성공했습니다." });
-      },
-      onError: () =>
-        notification.error({ message: "퀴즈 생성에 실패했습니다." }),
+    onSuccess: () => {
+      client.invalidateQueries({ queryKey: ["quizList"] });
+      setSelectId(false);
+      notification.success({ message: "퀴즈 생성에 성공했습니다." });
     },
-  );
+    onError: () => notification.error({ message: "퀴즈 생성에 실패했습니다." }),
+  });
 
   return (
     <Modal

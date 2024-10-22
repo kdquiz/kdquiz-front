@@ -1,6 +1,6 @@
 import { Select } from "@chakra-ui/react";
 import { Question } from "@/interface/Question.ts";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
 export function QuestionTypeSelect({
@@ -11,8 +11,8 @@ export function QuestionTypeSelect({
   data: Question;
 }) {
   const client = useQueryClient();
-  const { mutate } = useMutation(
-    async (value: number) => {
+  const { mutate } = useMutation({
+    mutationFn: async (value: number) => {
       return await axios.put(
         import.meta.env.VITE_API_URL + "/api/v1/question/" + id,
         {
@@ -26,12 +26,10 @@ export function QuestionTypeSelect({
         },
       );
     },
-    {
-      onSuccess: () => {
-        client.invalidateQueries({ queryKey: "quizDetail" });
-      },
+    onSuccess: () => {
+      client.invalidateQueries({ queryKey: ["quizDetail"] });
     },
-  );
+  });
 
   return (
     <Select

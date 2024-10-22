@@ -1,12 +1,12 @@
 import { FaTrashAlt } from "react-icons/fa";
 import { Center } from "@chakra-ui/react";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
 export function ChoiceDeleteButton({ id }: { id: number }) {
   const client = useQueryClient();
-  const { mutate: deleteChoice } = useMutation(
-    async () =>
+  const { mutate: deleteChoice } = useMutation({
+    mutationFn: async () =>
       await axios.delete(
         import.meta.env.VITE_API_URL + "/api/v1/question/choice/" + id,
         {
@@ -15,10 +15,8 @@ export function ChoiceDeleteButton({ id }: { id: number }) {
           },
         },
       ),
-    {
-      onSuccess: () => client.invalidateQueries({ queryKey: "quizDetail" }),
-    },
-  );
+    onSuccess: () => client.invalidateQueries({ queryKey: ["quizDetail"] }),
+  });
 
   return (
     <Center onClick={() => deleteChoice()} cursor={"pointer"} opacity={"70%"}>

@@ -1,6 +1,6 @@
 import { FaTrashAlt } from "react-icons/fa";
 import { Center } from "@chakra-ui/react";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { App, notification } from "antd";
 import { Dispatch, SetStateAction } from "react";
@@ -17,23 +17,21 @@ export function QuizDeleteButton({
 
   const client = useQueryClient();
 
-  const { mutate: deleteMutate } = useMutation(
-    async (v: string) => {
+  const { mutate: deleteMutate } = useMutation({
+    mutationFn: async (v: string) => {
       await axios.delete(import.meta.env.VITE_API_URL + "/api/v1/quiz/" + v, {
         headers: {
           Authorization: localStorage.getItem("Authorization"),
         },
       });
     },
-    {
-      onSuccess: () => {
-        setSelectId(false);
-        client.invalidateQueries({ queryKey: "quizList" });
-        notification.success({ message: "퀴즈 삭제 완료되었습니다." });
-      },
-      onError: () => notification.error({ message: "퀴즈 삭제 실패했습니다." }),
+    onSuccess: () => {
+      setSelectId(false);
+      client.invalidateQueries({ queryKey: ["quizList"] });
+      notification.success({ message: "퀴즈 삭제 완료되었습니다." });
     },
-  );
+    onError: () => notification.error({ message: "퀴즈 삭제 실패했습니다." }),
+  });
 
   const deleteModal = (v: any) => {
     modal.confirm({

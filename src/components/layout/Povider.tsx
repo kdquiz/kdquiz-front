@@ -1,7 +1,7 @@
 import theme from "@/theme.ts";
 import { ReactNode } from "react";
 import React from "react";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ChakraProvider } from "@chakra-ui/react";
 import { ConfigProvider } from "antd";
 const queryClient = new QueryClient();

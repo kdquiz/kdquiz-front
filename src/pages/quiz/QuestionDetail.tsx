@@ -1,5 +1,5 @@
 import { Box, Center, Flex, Grid, Image } from "@chakra-ui/react";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useSearchParams } from "react-router-dom";
 import { ChoiceItem } from "@/pages/quiz/Choice/ChoiceItem.tsx";
@@ -14,17 +14,17 @@ export function QuestionDetail() {
   const [searchParams] = useSearchParams();
   const id = searchParams.get("id");
 
-  const { data, refetch } = useQuery(
-    "quizDetail",
-    async () =>
-      await axios
+  const { data, refetch } = useQuery({
+    queryKey: ["quizDetail"],
+    queryFn: () =>
+      axios
         .get(import.meta.env.VITE_API_URL + "/api/v1/question/" + id, {
           headers: {
             Authorization: localStorage.getItem("Authorization"),
           },
         })
         .then((value) => value.data.data),
-  );
+  });
 
   useEffect(() => {
     refetch();

@@ -1,6 +1,6 @@
 import { Box, Checkbox, Flex, Input, Text, Textarea } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useSearchParams } from "react-router-dom";
 import Button from "@/components/Button.tsx";
@@ -13,9 +13,9 @@ export function QuestionSetPanel() {
 
   const client = useQueryClient();
 
-  const { data, isLoading, isError } = useQuery(
-    "quizDetail",
-    async () =>
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["quizDetail"],
+    queryFn: async () =>
       await axios
         .get(import.meta.env.VITE_API_URL + "/api/v1/question/" + id, {
           headers: {
@@ -23,10 +23,10 @@ export function QuestionSetPanel() {
           },
         })
         .then((value) => value.data),
-  );
+  });
 
-  const { mutate } = useMutation(
-    async (value: any) => {
+  const { mutate } = useMutation({
+    mutationFn: async (value: any) => {
       return await axios.put(
         import.meta.env.VITE_API_URL + "/api/v1/question/" + id,
         {
@@ -40,12 +40,10 @@ export function QuestionSetPanel() {
         },
       );
     },
-    {
-      onSuccess: () => {
-        client.invalidateQueries({ queryKey: "quizDetail" });
-      },
+    onSuccess: () => {
+      client.invalidateQueries({ queryKey: ["quizDetail"] });
     },
-  );
+  });
 
   const { handleSubmit, register } = useForm({
     defaultValues: { ...data },

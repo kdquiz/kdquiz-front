@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { Center } from "@chakra-ui/react";
 import { FaCheckCircle } from "react-icons/fa";
@@ -15,8 +15,8 @@ export function ChoiceCorrectButton({
   unCorrectAble?: boolean;
 }) {
   const client = useQueryClient();
-  const { mutate: setIsCorrect } = useMutation(
-    async () =>
+  const { mutate: setIsCorrect } = useMutation({
+    mutationFn: async () =>
       await axios.put(
         import.meta.env.VITE_API_URL + "/api/v1/question/choice/",
         {
@@ -31,10 +31,8 @@ export function ChoiceCorrectButton({
           },
         },
       ),
-    {
-      onSuccess: () => client.invalidateQueries({ queryKey: "quizDetail" }),
-    },
-  );
+    onSuccess: () => client.invalidateQueries({ queryKey: ["quizDetail"] }),
+  });
 
   return (
     <Center

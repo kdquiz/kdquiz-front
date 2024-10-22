@@ -1,7 +1,7 @@
 import Loading from "@/components/Loading.tsx";
 import Error from "@/components/Error.tsx";
 import { Box, Center, Flex, Text } from "@chakra-ui/react";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useSearchParams } from "react-router-dom";
 import { QuestionDeleteButton } from "@/pages/quiz/QuestionListPanel/QuestionDeleteButton.tsx";
@@ -13,25 +13,25 @@ export function QuestionListPanel() {
   const quizId = searchParams.get("quiz-id");
   const id = Number(searchParams.get("id")) ?? 0;
 
-  const { data, isLoading, isError, isSuccess, refetch } = useQuery(
-    "questionList",
-    () =>
-      axios.get(import.meta.env.VITE_API_URL + "/api/v1/quiz/" + quizId, {
-        headers: {
-          Authorization: localStorage.getItem("Authorization"),
-        },
-      }),
-    {
-      onSuccess: (data) => {
-        if (id) return;
-        searchParams.set("id", data?.data.data.questions[0].id);
-        setSearchParams(searchParams);
-      },
-    },
-  );
+  const { data, isLoading, isError, isSuccess, refetch } = useQuery({
+    queryKey: ["questionList"],
+    queryFn: async () =>
+      axios
+        .get(import.meta.env.VITE_API_URL + "/api/v1/quiz/" + quizId, {
+          headers: {
+            Authorization: localStorage.getItem("Authorization"),
+          },
+        })
+        .then((data) => {
+          if (id) return data;
+          searchParams.set("id", data?.data.data.questions[0].id);
+          setSearchParams(searchParams);
+          return data;
+        }),
+  });
 
-  const { mutate: createQuestion } = useMutation(
-    async () => {
+  const { mutate: createQuestion } = useMutation({
+    mutationFn: async () => {
       await axios.post(
         import.meta.env.VITE_API_URL + "/api/v1/question/" + quizId,
         {},
@@ -42,10 +42,8 @@ export function QuestionListPanel() {
         },
       );
     },
-    {
-      onSuccess: () => refetch(),
-    },
-  );
+    onSuccess: () => refetch(),
+  });
 
   return (
     <Box

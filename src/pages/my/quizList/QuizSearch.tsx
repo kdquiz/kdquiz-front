@@ -3,7 +3,7 @@ import { Controller, useForm } from "react-hook-form";
 import Button from "@/components/Button.tsx";
 import { MdSearch } from "react-icons/md";
 import { useSearchParams } from "react-router-dom";
-import { useQueryClient } from "react-query";
+import { useQueryClient } from "@tanstack/react-query";
 
 export function QuizSearch() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -17,10 +17,10 @@ export function QuizSearch() {
   return (
     <Center>
       <form
-        onSubmit={searchHandleSubmit(async (data) => {
-          await searchParams.set("search", data.title ?? "");
-          await setSearchParams(searchParams);
-          client.invalidateQueries({ queryKey: "quizList" });
+        onSubmit={searchHandleSubmit((data) => {
+          searchParams.set("search", data.title ?? "");
+          setSearchParams(searchParams);
+          client.invalidateQueries({ queryKey: ["quizList"] });
         })}
       >
         <Center

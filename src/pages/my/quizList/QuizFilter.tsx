@@ -1,6 +1,6 @@
 import { Center, Flex } from "@chakra-ui/react";
 import { useSearchParams } from "react-router-dom";
-import { useQueryClient } from "react-query";
+import { useQueryClient } from "@tanstack/react-query";
 
 const SORT_LIST = [
   ["Time_desc", "최신순"],
@@ -33,7 +33,7 @@ export function QuizFilter() {
           onClick={() => {
             searchParams.set("sort", v[0]);
             setSearchParams(searchParams);
-            client.invalidateQueries({ queryKey: "quizList" });
+            client.invalidateQueries({ queryKey: ["quizList"] });
           }}
           transition={"0.25s"}
           bg={v[0] === sort ? "primary" : "white"}
