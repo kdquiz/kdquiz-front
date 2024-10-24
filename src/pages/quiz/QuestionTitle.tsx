@@ -21,7 +21,8 @@ export function QuestionTitle({ id, data }: { id: number; data: Question }) {
       );
     },
     onSuccess: () => {
-      client.invalidateQueries({ queryKey: ["quizDetail", "questionList"] });
+      client.invalidateQueries({ queryKey: ["questionList"] });
+      client.invalidateQueries({ queryKey: ["quizDetail"] });
     },
   });
 

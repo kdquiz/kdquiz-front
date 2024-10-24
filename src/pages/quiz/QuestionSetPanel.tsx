@@ -7,6 +7,7 @@ import Button from "@/components/Button.tsx";
 import { QuestionTypeSelect } from "@/pages/quiz/QuestionTypeSelect.tsx";
 import { Spin } from "antd";
 import Error from "@/components/Error.tsx";
+import { Question } from "@/interface/Question.ts";
 
 export function QuestionSetPanel() {
   const [searchParams] = useSearchParams();
@@ -26,12 +27,12 @@ export function QuestionSetPanel() {
 
   if (isPending) return <Spin />;
   if (isError) return <Error />;
-  return <A data={data} key={id} />;
+  return <QuestionSetPanelInner data={data} key={id} />;
 }
-function A({ data }) {
+function QuestionSetPanelInner({ data }: { data: Question }) {
   const client = useQueryClient();
 
-  const { handleSubmit, register } = useForm();
+  const { handleSubmit, register } = useForm({ defaultValues: data });
   const [searchParams] = useSearchParams();
 
   const id = searchParams.get("id");
@@ -56,17 +57,18 @@ function A({ data }) {
   });
 
   return (
-    <form onSubmit={handleSubmit((data) => mutate(data))}>
-      <Box
-        w={"300px"}
-        bg={"whitesmoke"}
-        h={"100%"}
-        p={5}
-        pos={"absolute"}
-        right={0}
-        top={0}
-        overflowY={"scroll"}
-      >
+    <Box
+      p={5}
+      pt={"100px"}
+      w={"300px"}
+      bg={"whitesmoke"}
+      h={"100%"}
+      pos={"absolute"}
+      right={0}
+      top={0}
+      overflowY={"scroll"}
+    >
+      <form onSubmit={handleSubmit((data) => mutate(data))}>
         <Flex gap={4} flexDir={"column"}>
           <Flex flexDir={"column"} gap={2}>
             <Text fontSize={"2xl"} color={"mainText"}>
@@ -79,14 +81,11 @@ function A({ data }) {
               제한 시간
             </Text>
             <Input
-              key={data.id}
               type={"number"}
               {...register("options.time", {
                 required: "제한 시간을 입력해주세요",
                 value: data?.options.time ?? "",
               })}
-              defaultValue={data?.options.time ?? ""}
-              value={data?.options.time ?? ""}
               fontSize={"2xl"}
               color={"mainText"}
               w={"100%"}
@@ -98,12 +97,10 @@ function A({ data }) {
               배점
             </Text>
             <Input
-              key={data.id}
               type={"number"}
               {...register("options.score", {
                 required: "점수를 입력해주세요",
               })}
-              defaultValue={data.options.score}
               fontSize={"2xl"}
               color={"mainText"}
               w={"100%"}
@@ -115,10 +112,8 @@ function A({ data }) {
               힌트 사용
             </Text>
             <Checkbox
-              key={data.id}
               color={"primary"}
               size={"lg"}
-              defaultValue={data.options.useHint}
               {...register("options.useHint")}
             />
           </Flex>
@@ -127,10 +122,8 @@ function A({ data }) {
               힌트 제공 시간
             </Text>
             <Input
-              key={data.id}
               type={"number"}
               {...register("options.hintTime")}
-              defaultValue={data.options.hintTime}
               fontSize={"2xl"}
               color={"mainText"}
               w={"100%"}
@@ -142,8 +135,6 @@ function A({ data }) {
               힌트 내용
             </Text>
             <Textarea
-              key={data.id}
-              defaultValue={data.options.hintContent}
               {...register("options.hintContent")}
               fontSize={"2xl"}
               w={"100%"}
@@ -155,8 +146,6 @@ function A({ data }) {
               해설
             </Text>
             <Textarea
-              key={data.id}
-              defaultValue={data.options.commentary}
               {...register("options.commentary")}
               fontSize={"2xl"}
               color={"mainText"}
@@ -167,7 +156,7 @@ function A({ data }) {
             <Text color={"white"}>저장</Text>
           </Button>
         </Flex>
-      </Box>
-    </form>
+      </form>
+    </Box>
   );
 }

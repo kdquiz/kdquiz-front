@@ -1,4 +1,4 @@
-import { Center, Flex, Image, Link } from "@chakra-ui/react";
+import { Box, Center, Flex, Image, Link } from "@chakra-ui/react";
 import Button from "../Button";
 import { useCallback } from "react";
 import { notification } from "antd";
@@ -17,52 +17,37 @@ export default function GNB() {
   }, [navigate]);
 
   return (
-    <Flex
+    <Box
       w={"100%"}
       h={["36px", null, "72px"]}
-      justify={"space-between"}
-      position={"absolute"}
+      position={"fixed"}
       boxShadow={"2px 2px 2px #646363"}
       bg={"white"}
       top={0}
+      zIndex={10}
     >
-      <Link href={"/"}>
-        <Image src={"/images/main-logo.svg"} h={"100%"} />
-      </Link>
-      <Center h={"100%"}>
-        <Link
-          href={email ? "/my" : "/signup"}
-          style={{ height: "100%", textDecoration: "none" }}
-        >
-          <Button
-            w={email ? "auto" : ["86px", null, "172px"]}
-            bg={"subMain"}
-            fontSize={email ? ["xs", "md", "2xl"] : ["md", null, "2xl"]}
-            color={"mainText"}
-            fontWeight={"800"}
-            h={"100%"}
-            cursor={"pointer"}
-          >
-            {email ? email : "회원가입"}
-          </Button>
+      <Flex w={"100%"} justify={"space-between"} h={"100%"}>
+        <Link href={"/"}>
+          <Image src={"/images/main-logo.svg"} h={"100%"} />
         </Link>
-        {email ? (
-          <Button
-            w={["86px", null, "172px"]}
-            bg={"primary"}
-            fontSize={["md", null, "2xl"]}
-            color={"subText"}
-            fontWeight={"700"}
-            h={"100%"}
-            onClick={logout}
-          >
-            로그아웃
-          </Button>
-        ) : (
+        <Center h={"100%"}>
           <Link
-            href={"/login"}
+            href={email ? "/my" : "/signup"}
             style={{ height: "100%", textDecoration: "none" }}
           >
+            <Button
+              w={email ? "auto" : ["86px", null, "172px"]}
+              bg={"subMain"}
+              fontSize={email ? ["xs", "md", "2xl"] : ["md", null, "2xl"]}
+              color={"mainText"}
+              fontWeight={"800"}
+              h={"100%"}
+              cursor={"pointer"}
+            >
+              {email ? email : "회원가입"}
+            </Button>
+          </Link>
+          {email ? (
             <Button
               w={["86px", null, "172px"]}
               bg={"primary"}
@@ -70,12 +55,29 @@ export default function GNB() {
               color={"subText"}
               fontWeight={"700"}
               h={"100%"}
+              onClick={logout}
             >
-              로그인
+              로그아웃
             </Button>
-          </Link>
-        )}
-      </Center>
-    </Flex>
+          ) : (
+            <Link
+              href={"/login"}
+              style={{ height: "100%", textDecoration: "none" }}
+            >
+              <Button
+                w={["86px", null, "172px"]}
+                bg={"primary"}
+                fontSize={["md", null, "2xl"]}
+                color={"subText"}
+                fontWeight={"700"}
+                h={"100%"}
+              >
+                로그인
+              </Button>
+            </Link>
+          )}
+        </Center>
+      </Flex>
+    </Box>
   );
 }

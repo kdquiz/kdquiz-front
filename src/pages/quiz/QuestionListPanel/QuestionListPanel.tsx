@@ -13,7 +13,7 @@ export function QuestionListPanel() {
   const quizId = searchParams.get("quiz-id");
   const id = Number(searchParams.get("id")) ?? 0;
 
-  const { data, isLoading, isError, isSuccess, refetch } = useQuery({
+  const { data, isPending, isError, isSuccess, refetch } = useQuery({
     queryKey: ["questionList"],
     queryFn: async () =>
       axios
@@ -23,9 +23,10 @@ export function QuestionListPanel() {
           },
         })
         .then((data) => {
-          if (id) return data;
-          searchParams.set("id", data?.data.data.questions[0].id);
-          setSearchParams(searchParams);
+          if (!id) {
+            searchParams.set("id", data?.data.data.questions[0].id);
+            setSearchParams(searchParams);
+          }
           return data;
         }),
   });
@@ -47,15 +48,16 @@ export function QuestionListPanel() {
 
   return (
     <Box
+      pt={"72px"}
       w={"300px"}
       flexDir={"column"}
       h={"100%"}
       bg={"whitesmoke"}
-      pos={"fixed"}
+      pos={"absolute"}
       overflowY={"scroll"}
       pb={"100px"}
     >
-      {isLoading ? (
+      {isPending ? (
         <Loading />
       ) : isError ? (
         <Error />

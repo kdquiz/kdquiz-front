@@ -15,7 +15,7 @@ export interface Question {
     time: 0;
   };
   choices: Choice[];
-  uploadFileNames: { fileName: string }[];
+  fileUrl: string;
 }
 
 export interface Choice {

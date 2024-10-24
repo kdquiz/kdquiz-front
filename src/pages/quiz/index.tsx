@@ -5,7 +5,7 @@ import { QuestionDetail } from "@/pages/quiz/QuestionDetail.tsx";
 
 export default function QuizDetailPage() {
   return (
-    <Box pos={"relative"} w={"100%"}>
+    <Box pos={"relative"} h={"100%"} w={"100%"} alignContent={"center"}>
       <QuestionListPanel />
       <QuestionDetail />
       <QuestionSetPanel />
