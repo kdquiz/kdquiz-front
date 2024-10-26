@@ -8,6 +8,7 @@ import { QuestionTypeSelect } from "@/pages/quiz/QuestionTypeSelect.tsx";
 import { Spin } from "antd";
 import Error from "@/components/Error.tsx";
 import { Question } from "@/interface/Question.ts";
+import { motion } from "framer-motion";
 
 export function QuestionSetPanel() {
   const [searchParams] = useSearchParams();
@@ -25,9 +26,29 @@ export function QuestionSetPanel() {
         .then((value) => value.data.data),
   });
 
-  if (isPending) return <Spin />;
-  if (isError) return <Error />;
-  return <QuestionSetPanelInner data={data} key={id} />;
+  return (
+    <Box
+      p={5}
+      w={"300px"}
+      bg={"whitesmoke"}
+      h={"100%"}
+      pos={"absolute"}
+      right={0}
+      top={0}
+      overflowY={"scroll"}
+      style={{
+        scrollbarWidth: "none",
+      }}
+    >
+      {isPending ? (
+        <Spin />
+      ) : isError ? (
+        <Error />
+      ) : (
+        <QuestionSetPanelInner data={data} key={id} />
+      )}
+    </Box>
+  );
 }
 function QuestionSetPanelInner({ data }: { data: Question }) {
   const client = useQueryClient();
@@ -57,19 +78,13 @@ function QuestionSetPanelInner({ data }: { data: Question }) {
   });
 
   return (
-    <Box
-      p={5}
-      pt={"100px"}
-      w={"300px"}
-      bg={"whitesmoke"}
-      h={"100%"}
-      pos={"absolute"}
-      right={0}
-      top={0}
-      overflowY={"scroll"}
-    >
-      <form onSubmit={handleSubmit((data) => mutate(data))}>
-        <Flex gap={4} flexDir={"column"}>
+    <form onSubmit={handleSubmit((data) => mutate(data))}>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: [0, 1] }}
+        key={id}
+      >
+        <Flex gap={4} flexDir={"column"} zIndex={5}>
           <Flex flexDir={"column"} gap={2}>
             <Text fontSize={"2xl"} color={"mainText"}>
               퀴즈 유형
@@ -156,7 +171,7 @@ function QuestionSetPanelInner({ data }: { data: Question }) {
             <Text color={"white"}>저장</Text>
           </Button>
         </Flex>
-      </form>
-    </Box>
+      </motion.div>
+    </form>
   );
 }

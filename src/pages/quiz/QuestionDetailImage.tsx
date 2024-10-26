@@ -4,6 +4,7 @@ import { MdOutlineUnarchive } from "react-icons/md";
 import axios from "axios";
 import { Question } from "@/interface/Question.ts";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { FaTrashAlt } from "react-icons/fa";
 
 export function QuestionDetailImage({
   image,
@@ -29,7 +30,10 @@ export function QuestionDetailImage({
           },
         },
       ),
-    onSuccess: () => client.invalidateQueries({ queryKey: ["questionList"] }),
+    onSuccess: () => {
+      client.invalidateQueries({ queryKey: ["questionList"] });
+      client.invalidateQueries({ queryKey: ["quizDetail"] });
+    },
   });
 
   return (
@@ -58,7 +62,21 @@ export function QuestionDetailImage({
           image ? import.meta.env.VITE_API_URL + "/" + image : "/images/img.png"
         }
       />
-      {!image && (
+      {image ? (
+        <Center
+          cursor={"pointer"}
+          onClick={() => {}}
+          position={"absolute"}
+          right={"-50px"}
+          bottom={"20px"}
+          transition={".25s"}
+          _hover={{
+            opacity: 0.5,
+          }}
+        >
+          <FaTrashAlt fontSize={"36px"} color={"#646363"} />
+        </Center>
+      ) : (
         <Box
           w={"100%"}
           h={"100%"}

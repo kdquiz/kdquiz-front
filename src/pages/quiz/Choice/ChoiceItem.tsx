@@ -20,7 +20,7 @@ export function ChoiceItem({
     <Center
       borderRadius={"24px"}
       bg={"buttonBg" + (index + 1)}
-      h={"100px"}
+      py={5}
       boxShadow={[0, null, "-4px 4px 4px #646363"]}
       position={"relative"}
     >

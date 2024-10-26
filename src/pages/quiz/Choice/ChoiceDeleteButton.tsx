@@ -19,7 +19,15 @@ export function ChoiceDeleteButton({ id }: { id: number }) {
   });
 
   return (
-    <Center onClick={() => deleteChoice()} cursor={"pointer"} opacity={"70%"}>
+    <Center
+      onClick={() => deleteChoice()}
+      cursor={"pointer"}
+      opacity={"70%"}
+      transition={".25s"}
+      _hover={{
+        opacity: 0.3,
+      }}
+    >
       <FaTrashAlt fontSize={"36px"} color={"#646363"} />
     </Center>
   );

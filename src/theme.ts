@@ -9,6 +9,7 @@ const theme = extendTheme({
   config,
   colors: {
     primary: "#85AEFF",
+    hoverPrimary: "#bbd1ff",
     subMain: "#FAEC71",
     mainText: "#646363",
     subText: "#FFFFFF",

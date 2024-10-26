@@ -41,11 +41,13 @@ export function ChoiceCorrectButton({
         !isCorrect ? setIsCorrect() : !unCorrectAble && setIsCorrect()
       }
       opacity={"70%"}
+      transition={"0.25s"}
+      color={isCorrect ? "#FFFFFF" : "#646363"}
+      _hover={{
+        color: "#FFFFFF",
+      }}
     >
-      <FaCheckCircle
-        fontSize={"36px"}
-        color={isCorrect ? "#FFFFFF" : "#646363"}
-      />
+      <FaCheckCircle fontSize={"36px"} />
     </Center>
   );
 }

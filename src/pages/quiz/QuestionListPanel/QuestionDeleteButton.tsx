@@ -38,6 +38,10 @@ export function QuestionDeleteButton({
         mutate();
       }}
       cursor={"pointer"}
+      transition={".25s"}
+      _hover={{
+        opacity: 0.5,
+      }}
     >
       <FaTrashAlt fontSize={"36px"} color={"#646363"} />
     </Center>

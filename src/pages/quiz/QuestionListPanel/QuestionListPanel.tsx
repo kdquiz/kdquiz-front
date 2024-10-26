@@ -1,11 +1,11 @@
 import Loading from "@/components/Loading.tsx";
 import Error from "@/components/Error.tsx";
-import { Box, Center, Flex, Text } from "@chakra-ui/react";
+import { Box, Center } from "@chakra-ui/react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useSearchParams } from "react-router-dom";
-import { QuestionDeleteButton } from "@/pages/quiz/QuestionListPanel/QuestionDeleteButton.tsx";
 import { MdAddCircleOutline } from "react-icons/md";
+import { QuestionItem } from "@/pages/quiz/QuestionListPanel/QuestionItem.tsx";
 
 export function QuestionListPanel() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -27,7 +27,7 @@ export function QuestionListPanel() {
             searchParams.set("id", data?.data.data.questions[0].id);
             setSearchParams(searchParams);
           }
-          return data;
+          return data.data.data.questions;
         }),
   });
 
@@ -48,7 +48,6 @@ export function QuestionListPanel() {
 
   return (
     <Box
-      pt={"72px"}
       w={"300px"}
       flexDir={"column"}
       h={"100%"}
@@ -56,6 +55,8 @@ export function QuestionListPanel() {
       pos={"absolute"}
       overflowY={"scroll"}
       pb={"100px"}
+      zIndex={5}
+      style={{ scrollbarWidth: "none" }}
     >
       {isPending ? (
         <Loading />
@@ -64,49 +65,8 @@ export function QuestionListPanel() {
       ) : (
         data &&
         isSuccess &&
-        data.data.data.questions.map((v: any, index: number) => (
-          <Center flexDir={"column"} w={"100%"} p={4} gap={1} key={index}>
-            <Text fontSize={"xl"} color={"mainText"} w={"100%"}>
-              {index + 1}.
-            </Text>
-            <Flex w={"100%"} gap={2}>
-              <Center
-                onClick={() => {
-                  searchParams.set("id", String(v.id));
-                  setSearchParams(searchParams);
-                }}
-                cursor={"pointer"}
-                w={"200px"}
-                h={"150px"}
-                borderRadius={"6px"}
-                bg={"select"}
-                bgImage={"/images/play-bg.png"}
-                bgSize={"cover"}
-                overflow={"hidden"}
-                border={"4px"}
-                borderColor={Number(id) === v.id ? "primary" : "mainText"}
-              >
-                <Text
-                  textAlign={"center"}
-                  fontSize={"3xl"}
-                  color={"mainText"}
-                  textOverflow={"ellipsis"}
-                  whiteSpace={"nowrap"}
-                  w={"100%"}
-                >
-                  {v.content}
-                </Text>
-              </Center>
-              <Flex flexDir={"column"}>
-                {data.data.data.questions.length !== 1 && (
-                  <QuestionDeleteButton
-                    id={Number(v.id)}
-                    initId={data.data.data.questions[0].id}
-                  />
-                )}
-              </Flex>
-            </Flex>
-          </Center>
+        data.map((v: any, index: number) => (
+          <QuestionItem {...v} index={index} quizList={data} />
         ))
       )}
       <Center>
