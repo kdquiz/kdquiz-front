@@ -37,6 +37,7 @@ export function QuizDeleteButton({
     modal.confirm({
       title: "퀴즈 삭제",
       content: title + " 퀴즈를 삭제할까요?",
+      cancelText: "취소",
       onOk: () => deleteMutate(v),
     });
   };

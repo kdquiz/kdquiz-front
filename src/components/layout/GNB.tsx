@@ -36,26 +36,28 @@ export default function GNB() {
             style={{ height: "100%", textDecoration: "none" }}
           >
             <Button
-              w={email ? "auto" : ["86px", null, "172px"]}
               bg={"subMain"}
+              minW={[null, null, "156px"]}
               fontSize={email ? ["xs", "md", "2xl"] : ["md", null, "2xl"]}
               color={"mainText"}
               fontWeight={"800"}
               h={"100%"}
               cursor={"pointer"}
+              p={3}
             >
               {email ? email : "회원가입"}
             </Button>
           </Link>
           {email ? (
             <Button
-              w={["86px", null, "172px"]}
+              minW={[null, null, "156px"]}
               bg={"primary"}
               fontSize={["md", null, "2xl"]}
               color={"subText"}
               fontWeight={"700"}
               h={"100%"}
               onClick={logout}
+              p={3}
             >
               로그아웃
             </Button>
@@ -65,12 +67,13 @@ export default function GNB() {
               style={{ height: "100%", textDecoration: "none" }}
             >
               <Button
-                w={["86px", null, "172px"]}
+                minW={[null, null, "156px"]}
                 bg={"primary"}
                 fontSize={["md", null, "2xl"]}
                 color={"subText"}
                 fontWeight={"700"}
                 h={"100%"}
+                p={3}
               >
                 로그인
               </Button>
