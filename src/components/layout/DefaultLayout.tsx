@@ -8,7 +8,7 @@ export default function DefaultLayout({ children }: { children: ReactNode }) {
       <GNB />
       <Center
         w={"100%"}
-        h={"100%"}
+        minH={"100%"}
         backgroundImage={"./images/main-bg.png"}
         backgroundPosition={"center"}
       >

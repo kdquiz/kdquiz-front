@@ -4,8 +4,8 @@ import Index from "@/pages";
 import LoginPage from "@/pages/login.tsx";
 import SignupPage from "@/pages/signup.tsx";
 import MyPage from "@/pages/my";
-import PlayPage from "@/pages/play.tsx";
 import QuizDetailPage from "@/pages/quiz";
+import QuizListPage from "@/pages/quiz-list";
 
 export const router = createBrowserRouter([
   {
@@ -25,7 +25,7 @@ export const router = createBrowserRouter([
         element: <SignupPage />,
       },
       { path: "/my", element: <MyPage /> },
-      { path: "/play", element: <PlayPage /> },
+      { path: "/quiz-list", element: <QuizListPage /> },
       { path: "/quiz", element: <QuizDetailPage /> },
     ],
   },

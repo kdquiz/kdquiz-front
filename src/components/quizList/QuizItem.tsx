@@ -12,8 +12,10 @@ export function QuizItem({
   update_at,
   create_at,
   setSelectId,
+  type = "my",
 }: Quiz & {
   setSelectId: Dispatch<SetStateAction<number | boolean | undefined>>;
+  type?: "my" | "play";
 }) {
   return (
     <Center
@@ -21,8 +23,7 @@ export function QuizItem({
       borderBottomLeftRadius={"16px"}
       bg={"primary"}
       p={"0 16px 16px 0"}
-      w={"100%"}
-      boxShadow={["none", null, "4px 4px 4px #646363"]}
+      boxShadow={["2px 2px 2px #646363", null, "4px 4px 4px #646363"]}
       _hover={{
         boxShadow: "0px 0px 0px #646363",
       }}
@@ -30,6 +31,7 @@ export function QuizItem({
         boxShadow: "inset 2px 2px 2px #646363, 0px 0px 0px #646363",
       }}
       transition={"0.25s"}
+      w={"100%"}
     >
       <Flex
         bg={"white"}
@@ -52,16 +54,22 @@ export function QuizItem({
             m={[1, null, 3]}
             w={"100%"}
           >
-            <Link href={"/quiz?quiz-id=" + id}>
-              <Text
-                fontSize={["md", null, "xl", "3xl"]}
-                color={"mainText"}
-                _hover={{ textDecoration: "underline" }}
-                cursor={"pointer"}
-              >
+            {type === "my" ? (
+              <Link href={"/quiz?quiz-id=" + id}>
+                <Text
+                  fontSize={["md", null, "xl", "3xl"]}
+                  color={"mainText"}
+                  _hover={{ textDecoration: "underline" }}
+                  cursor={"pointer"}
+                >
+                  {title}
+                </Text>
+              </Link>
+            ) : (
+              <Text fontSize={["md", null, "xl", "3xl"]} color={"mainText"}>
                 {title}
               </Text>
-            </Link>
+            )}
             <Flex gap={2} alignItems={"center"}>
               <Center display={["none", null, "flex"]}>
                 <MdAccessTimeFilled fontSize={"36px"} color={"#646363"} />
@@ -83,26 +91,29 @@ export function QuizItem({
             gap={[2, null, 0]}
             pr={[5, null, 0]}
           >
-            <Center justifyContent={"space-between"} gap={[2, null, 0]}>
-              <Center cursor={"pointer"} onClick={() => setSelectId(id)}>
-                <MdModeEditOutline fontSize={"48px"} color={"#646363"} />
+            {type === "my" ? (
+              <Center justifyContent={"space-between"} gap={[2, null, 0]}>
+                <Center cursor={"pointer"} onClick={() => setSelectId(id)}>
+                  <MdModeEditOutline fontSize={"48px"} color={"#646363"} />
+                </Center>
+                <QuizDeleteButton
+                  id={id}
+                  title={title}
+                  setSelectId={setSelectId}
+                />
               </Center>
-              <QuizDeleteButton
-                id={id}
-                title={title}
-                setSelectId={setSelectId}
-              />
-            </Center>
-            <Button
-              color={"white"}
-              fontSize={["md", null, "xl", null, "3xl"]}
-              bg={"primary"}
-              borderRadius={"6px"}
-              w={["60px", null, "100px", null, "120px"]}
-              h={["30px", null, "50px", null, "60px"]}
-            >
-              시작!
-            </Button>
+            ) : (
+              <Button
+                color={"white"}
+                fontSize={["md", null, "xl", null, "3xl"]}
+                bg={"primary"}
+                borderRadius={"6px"}
+                w={["60px", null, "100px", null, "120px"]}
+                h={["30px", null, "50px", null, "60px"]}
+              >
+                시작!
+              </Button>
+            )}
           </Flex>
         </Flex>
       </Flex>
