@@ -6,7 +6,7 @@ import axios from "axios";
 import { notification, Spin } from "antd";
 import { Timer } from "@/components/Timer.tsx";
 import { useNavigate } from "react-router-dom";
-import { SignUpInContainer } from "@/components/layout/SignUpInContainer.tsx";
+import { QuizContainer } from "@/components/layout/QuizContainer.tsx";
 
 export default function SignupPage() {
   const {
@@ -49,7 +49,7 @@ export default function SignupPage() {
 
   return (
     <Center w={"100%"}>
-      <SignUpInContainer>
+      <QuizContainer>
         <Center
           w={["300px", null, "450px"]}
           h={["500px", null, "620px"]}
@@ -76,11 +76,10 @@ export default function SignupPage() {
                     setEmail(data.email);
                     setEmailSendCheck(true);
                   })
-                  .catch((e) => {
+                  .catch(() => {
                     notification.error({
                       message: "이미 가입된 이메일 입니다.",
                     });
-                    console.log(e);
                   });
                 setEmailSendLoading(false);
               })}
@@ -166,11 +165,10 @@ export default function SignupPage() {
                     }
                     setCodeError("code", { type: "required" });
                   })
-                  .catch((e) => {
+                  .catch(() => {
                     notification.error({
                       message: "인증 실패했습니다.",
                     });
-                    console.log(e);
                   });
                 setEmailCheckLoading(false);
               })}
@@ -256,11 +254,10 @@ export default function SignupPage() {
                   });
                   navigate("/login");
                 })
-                .catch((e) => {
+                .catch(() => {
                   notification.error({
                     message: "회원가입 실패했습니다.",
                   });
-                  console.log(e);
                 });
               setSigninLoading(false);
             })}
@@ -344,7 +341,7 @@ export default function SignupPage() {
             </Center>
           </form>
         </Center>
-      </SignUpInContainer>
+      </QuizContainer>
     </Center>
   );
 }

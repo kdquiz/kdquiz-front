@@ -32,7 +32,7 @@ export function QuestionItem({
           h={"150px"}
           borderRadius={"6px"}
           bg={"select"}
-          bgImage={"/images/play-bg.png"}
+          bgImage={"/images/play-bg.webp"}
           bgSize={"cover"}
           overflow={"hidden"}
           border={"4px"}

@@ -65,7 +65,10 @@ export function QuestionDetailImage({
       {image ? (
         <Center
           cursor={"pointer"}
-          onClick={() => {}}
+          onClick={(e) => {
+            e.stopPropagation();
+            mutate("");
+          }}
           position={"absolute"}
           right={"-50px"}
           bottom={"20px"}

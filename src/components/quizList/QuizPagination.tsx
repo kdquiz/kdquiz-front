@@ -13,7 +13,7 @@ export function QuizPagination({
 }: Pagination) {
   const [searchParams, setSearchParams] = useSearchParams();
   const numberPage = Number(searchParams.get(pageKey)) + 1;
-  const size = Number(searchParams.get(sizeKey) ?? 10);
+  const size = Number(searchParams.get(sizeKey) ?? 5);
   const totalPage = Math.ceil(dataLength / size);
   const center = numberPage > 2 && totalPage - 2 >= numberPage;
   const offset =
@@ -27,7 +27,7 @@ export function QuizPagination({
 
   if (!dataLength) return;
   return (
-    <Center style={{ background: "white" }} gap={2}>
+    <Center gap={2}>
       <Center
         onClick={() => {
           if (numberPage !== 1) {

@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Center, Flex, Text } from "@chakra-ui/react";
-import Loading from "@/components/Loading.tsx";
 import Error from "@/components/Error.tsx";
 import { Quiz } from "@/interface/Quiz.ts";
 import Button from "@/components/Button.tsx";
@@ -12,6 +11,28 @@ import { QuizTitleModal } from "@/components/quizList/QuizTitleModal.tsx";
 import { QuizFilter } from "@/components/quizList/QuizFilter.tsx";
 import { QuizSearch } from "@/components/quizList/QuizSearch.tsx";
 import { QuizPagination } from "./QuizPagination";
+import { Spin } from "antd";
+import { motion } from "framer-motion";
+
+const ReviewListVariants = {
+  visible: {
+    transition: { staggerChildren: 0.1, delayChildren: 0.1 },
+  },
+  closed: {
+    transition: { staggerChildren: 0.05, staggerDirection: -1 },
+  },
+};
+
+const ReviewItemVariants = {
+  visible: {
+    y: 0,
+    opacity: 1,
+  },
+  closed: {
+    y: 20,
+    opacity: 0,
+  },
+};
 
 export function QuizList({ type = "my" }: { type?: "play" | "my" }) {
   const [searchParams] = useSearchParams();
@@ -35,7 +56,7 @@ export function QuizList({ type = "my" }: { type?: "play" | "my" }) {
                   }
                 : {
                     page: Number(page) + 1,
-                    size: 10,
+                    size: 5,
                   },
             headers:
               type === "my"
@@ -49,12 +70,17 @@ export function QuizList({ type = "my" }: { type?: "play" | "my" }) {
     enabled: !!page,
   });
 
-  console.log(data);
-
   const [selectId, setSelectId] = useState<number | boolean>();
 
-  if (isPending) return <Loading />;
+  if (isPending)
+    return (
+      <Center w={"100%"}>
+        <Spin />
+      </Center>
+    );
+
   if (isError || data.code === "Q202") return <Error />;
+
   return (
     <>
       {type === "my" && (
@@ -70,7 +96,21 @@ export function QuizList({ type = "my" }: { type?: "play" | "my" }) {
           <QuizSearch />
         </Flex>
       )}
-      <Center flexDir={"column"} gap={4} w={"100%"}>
+      <motion.div
+        initial="closed"
+        variants={ReviewListVariants}
+        viewport={{ once: true }}
+        whileInView="visible"
+        style={{
+          display: "flex",
+          width: "100%",
+          flexDirection: "column",
+          height: "100%",
+          justifyContent: "space-between",
+          gap: "20px",
+        }}
+        key={page}
+      >
         {data.code === "Q102" ? (
           <Center>
             <Text
@@ -84,11 +124,15 @@ export function QuizList({ type = "my" }: { type?: "play" | "my" }) {
           </Center>
         ) : type === "my" ? (
           data.data.map((v: Quiz) => (
-            <QuizItem {...v} setSelectId={setSelectId} key={v.id} type={type} />
+            <motion.div variants={ReviewItemVariants} key={v.id}>
+              <QuizItem {...v} setSelectId={setSelectId} type={type} />
+            </motion.div>
           ))
         ) : (
           data.dtoList.map((v: Quiz) => (
-            <QuizItem {...v} setSelectId={setSelectId} key={v.id} type={type} />
+            <motion.div variants={ReviewItemVariants} key={v.id}>
+              <QuizItem {...v} setSelectId={setSelectId} type={type} />
+            </motion.div>
           ))
         )}
         {type === "my" && (
@@ -103,7 +147,7 @@ export function QuizList({ type = "my" }: { type?: "play" | "my" }) {
             퀴즈 생성
           </Button>
         )}
-      </Center>
+      </motion.div>
       {type === "my" ? (
         <QuizTitleModal setSelectId={setSelectId} selectId={selectId} />
       ) : (

@@ -11,6 +11,7 @@ export function QuizItem({
   title,
   update_at,
   create_at,
+  fileUrl,
   setSelectId,
   type = "my",
 }: Quiz & {
@@ -43,7 +44,11 @@ export function QuizItem({
         borderColor={"primary"}
       >
         <Image
-          src={"/images/play-bg.png"}
+          src={
+            fileUrl
+              ? import.meta.env.VITE_API_URL + "/" + fileUrl
+              : "/images/play-bg.webp"
+          }
           w={["100px", null, "200px"]}
           objectFit={"cover"}
         />
@@ -103,16 +108,18 @@ export function QuizItem({
                 />
               </Center>
             ) : (
-              <Button
-                color={"white"}
-                fontSize={["md", null, "xl", null, "3xl"]}
-                bg={"primary"}
-                borderRadius={"6px"}
-                w={["60px", null, "100px", null, "120px"]}
-                h={["30px", null, "50px", null, "60px"]}
-              >
-                시작!
-              </Button>
+              <Link href={"/participation?id=" + id}>
+                <Button
+                  color={"white"}
+                  fontSize={["md", null, "xl", null, "3xl"]}
+                  bg={"primary"}
+                  borderRadius={"6px"}
+                  w={["60px", null, "100px", null, "120px"]}
+                  h={["30px", null, "50px", null, "60px"]}
+                >
+                  시작!
+                </Button>
+              </Link>
             )}
           </Flex>
         </Flex>

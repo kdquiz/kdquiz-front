@@ -1,4 +1,3 @@
-import Loading from "@/components/Loading.tsx";
 import Error from "@/components/Error.tsx";
 import { Box, Center } from "@chakra-ui/react";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -6,6 +5,7 @@ import axios from "axios";
 import { useSearchParams } from "react-router-dom";
 import { MdAddCircleOutline } from "react-icons/md";
 import { QuestionItem } from "@/pages/quiz/QuestionListPanel/QuestionItem.tsx";
+import { Spin } from "antd";
 
 export function QuestionListPanel() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -59,7 +59,9 @@ export function QuestionListPanel() {
       style={{ scrollbarWidth: "none" }}
     >
       {isPending ? (
-        <Loading />
+        <Center w={"100%"}>
+          <Spin />
+        </Center>
       ) : isError ? (
         <Error />
       ) : (

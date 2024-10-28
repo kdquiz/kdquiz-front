@@ -30,11 +30,9 @@ export function QuestionDetail() {
         }),
   });
 
-  console.log(id);
-
   return (
     <Box
-      bgImage={"/images/play-bg.png"}
+      bgImage={"/images/play-bg.webp"}
       h={"100%"}
       bgSize={"cover"}
       bgPosition={"center"}

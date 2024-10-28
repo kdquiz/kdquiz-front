@@ -6,5 +6,6 @@ export interface Quiz {
   type?: string;
   update_at?: string;
   create_at: string;
+  fileUrl: string;
   questions?: Question[];
 }

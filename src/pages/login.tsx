@@ -5,7 +5,7 @@ import { useState } from "react";
 import axios from "axios";
 import { notification, Spin } from "antd";
 import { useNavigate } from "react-router-dom";
-import { SignUpInContainer } from "@/components/layout/SignUpInContainer.tsx";
+import { QuizContainer } from "@/components/layout/QuizContainer.tsx";
 
 export default function LoginPage() {
   const {
@@ -22,7 +22,7 @@ export default function LoginPage() {
 
   return (
     <Center w={"100%"}>
-      <SignUpInContainer>
+      <QuizContainer>
         <Center
           w={["300px", null, "380px"]}
           h={["500px", null, "620px"]}
@@ -42,7 +42,6 @@ export default function LoginPage() {
                 })
                 .then(async (res) => {
                   if (res.data.code === "U003") {
-                    console.log(res.data);
                     localStorage.setItem("Authorization", res.data.data);
                     localStorage.setItem("email", data.email);
                     notification.success({
@@ -61,7 +60,6 @@ export default function LoginPage() {
                   }
                 })
                 .catch((e) => {
-                  console.log(e);
                   if (e.code === "U103") setError("pw", { type: "notMatch" });
                   else
                     notification.error({
@@ -155,7 +153,7 @@ export default function LoginPage() {
             </Link>
           </Text>
         </Center>
-      </SignUpInContainer>
+      </QuizContainer>
     </Center>
   );
 }

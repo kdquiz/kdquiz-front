@@ -6,6 +6,8 @@ import SignupPage from "@/pages/signup.tsx";
 import MyPage from "@/pages/my";
 import QuizDetailPage from "@/pages/quiz";
 import QuizListPage from "@/pages/quiz-list";
+import ParticipationPage from "@/pages/participation";
+import PlayPage from "@/pages/play/index.tsx";
 
 export const router = createBrowserRouter([
   {
@@ -27,6 +29,8 @@ export const router = createBrowserRouter([
       { path: "/my", element: <MyPage /> },
       { path: "/quiz-list", element: <QuizListPage /> },
       { path: "/quiz", element: <QuizDetailPage /> },
+      { path: "/participation", element: <ParticipationPage /> },
+      { path: "/play", element: <PlayPage /> },
     ],
   },
 ]);
