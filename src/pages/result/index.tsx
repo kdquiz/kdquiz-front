@@ -32,7 +32,7 @@ export default function ResultPage() {
   if (isError) return <Error />;
 
   return (
-    <VStack w={"100%"} p={5} gap={5} height={"100vh"}>
+    <VStack w={"100%"} p={5} gap={5} height={"100dvh"}>
       <FadeInSlideRightWrapper>
         <QuizContainer width={"100%"}>
           <Center p={4}>

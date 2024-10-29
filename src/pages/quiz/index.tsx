@@ -7,7 +7,7 @@ export default function QuizDetailPage() {
   return (
     <Box
       pos={"relative"}
-      h={["calc(100vh - 36px)", null, "calc(100vh - 72px)"]}
+      h={["calc(100dvh - 36px)", null, "calc(100dvh - 72px)"]}
       w={"100%"}
       alignContent={"center"}
       mt={["36px", null, "72px"]}

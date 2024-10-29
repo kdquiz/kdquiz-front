@@ -6,7 +6,7 @@ export default function MyPage() {
     <Flex
       alignItems="center"
       w={["100%", null, null, "80%", "60%"]}
-      minH={"100vh"}
+      minH={"100dvh"}
       mx={"auto"}
       boxShadow={["none", null, "0px 4px 12px #646363"]}
       flexDir={"column"}

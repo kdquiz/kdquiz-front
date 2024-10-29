@@ -127,7 +127,7 @@ function GameInner({ data }: { data: Question[] }) {
   }, [data, page, searchParams, setSearchParams, sec]);
 
   return (
-    <VStack h={"100vh"} justify={"center"} position={"relative"} w={"100%"}>
+    <VStack h={"100dvh"} justify={"center"} position={"relative"} w={"100%"}>
       {page < data.length && (
         <>
           <ScoreTimerPanel seconds={sec} score={score} />
