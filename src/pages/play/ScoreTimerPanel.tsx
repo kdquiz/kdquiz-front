@@ -1,7 +1,13 @@
 import { MdOutlineTimer } from "react-icons/md";
 import { Center, Text } from "@chakra-ui/react";
 
-export function Timer({ seconds }: { seconds: string }) {
+export function ScoreTimerPanel({
+  seconds,
+  score,
+}: {
+  seconds: number;
+  score: number;
+}) {
   return (
     <Center
       fontSize={["md", null, "xl"]}
@@ -16,9 +22,12 @@ export function Timer({ seconds }: { seconds: string }) {
       top={"6px"}
       left={"6px"}
     >
+      <Text color={"white"} fontSize={"3xl"}>
+        점수:{score}
+      </Text>
       <MdOutlineTimer fontSize={"48px"} color={"white"} />
       <Text color={"white"} fontSize={"3xl"}>
-        {seconds}
+        {seconds < 0 ? 0 : seconds}
       </Text>
     </Center>
   );

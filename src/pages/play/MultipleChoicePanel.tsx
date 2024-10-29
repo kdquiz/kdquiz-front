@@ -6,7 +6,7 @@ export function MultipleChoicePanel({
   onClick,
 }: {
   choices: Choice[];
-  onClick?: () => void;
+  onClick: (value: boolean) => void;
 }) {
   return (
     <Grid w={"100%"} gap={2} gridTemplateColumns={"repeat(2, 1fr)"} h={"100%"}>
@@ -17,7 +17,7 @@ export function MultipleChoicePanel({
           py={5}
           boxShadow={"2px 2px 2px #646363"}
           position={"relative"}
-          onClick={v.isCorrect ? onClick : undefined}
+          onClick={() => onClick(v.isCorrect)}
         >
           <Text
             borderRadius={"24px"}

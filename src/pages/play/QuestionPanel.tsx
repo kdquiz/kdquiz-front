@@ -24,8 +24,9 @@ export function QuestionPanel({
           {currentQuestion.fileUrl && (
             <Image
               w={"100%"}
-              h={"100%"}
+              aspectRatio={"5/3"}
               objectFit={"cover"}
+              objectPosition={"center"}
               src={import.meta.env.VITE_API_URL + "/" + currentQuestion.fileUrl}
             />
           )}

@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 import GNB from "./GNB.tsx";
 
 export default function DefaultLayout({ children }: { children: ReactNode }) {
-  const withGnb = ["/play", "/participation"].includes(
+  const withGnb = ["/play", "/participation", "/result"].includes(
     window.location.pathname,
   );
   return (

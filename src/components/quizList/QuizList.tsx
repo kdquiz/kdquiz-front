@@ -124,7 +124,7 @@ export function QuizList({ type = "my" }: { type?: "play" | "my" }) {
           </Center>
         ) : type === "my" ? (
           data.data.map((v: Quiz) => (
-            <motion.div variants={ReviewItemVariants} key={v.id}>
+            <motion.div key={v.id}>
               <QuizItem {...v} setSelectId={setSelectId} type={type} />
             </motion.div>
           ))

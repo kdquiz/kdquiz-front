@@ -1,15 +1,17 @@
 import { Center, VStack } from "@chakra-ui/react";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { Spin } from "antd";
 import axios from "axios";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Error from "@/components/Error.tsx";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Question } from "@/interface/Question.ts";
 import { MultipleChoicePanel } from "@/pages/play/MultipleChoicePanel.tsx";
-import { Timer } from "@/pages/play/Timer.tsx";
-import { Score } from "@/pages/play/Score.tsx";
+import { ScoreTimerPanel } from "@/pages/play/ScoreTimerPanel.tsx";
 import { QuestionPanel } from "@/pages/play/QuestionPanel.tsx";
+import { CommentaryPanel } from "@/pages/play/CommentaryPanel.tsx";
+import { SubjectPanel } from "@/pages/play/SubjectPanel.tsx";
+import { HintButton } from "@/pages/play/HintButton.tsx";
 
 export default function PlayPage() {
   const [searchParams] = useSearchParams();
@@ -39,59 +41,97 @@ export default function PlayPage() {
 function GameInner({ data }: { data: Question[] }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const [score, setScore] = useState(0);
+  const [viewComment, setViewComment] = useState<
+    "correct" | "incorrect" | "timeout" | null
+  >(null);
 
   const id = Number(searchParams.get("id"));
   const userId = Number(searchParams.get("user-id"));
   const page = Number(searchParams.get("page"));
 
-  const INTERVAL = 1000;
-  const [timeLeft, setTimeLeft] = useState<number>(
-    data[page] ? data[page].options.time * INTERVAL : -1,
+  const naviate = useNavigate();
+
+  const [currentQuestion, setCurrentQuestion] = useState<Question>(
+    data[page < data.length ? page : 0],
   );
-  const seconds = String(Math.floor((timeLeft / 1000) % 60)).padStart(2, "0");
 
-  const [currentQuestion, setCurrentQuestion] = useState<Question>(data[page]);
+  const [sec, setSec] = useState<number>(
+    data[page < data.length ? page : 0].options.time,
+  );
+  const time = useRef<number>(data[page < data.length ? page : 0].options.time);
+  const timerId = useRef<number>();
 
-  const onCorrect = () => {
+  const { mutate } = useMutation({
+    mutationKey: ["FixRanking"],
+    mutationFn: async () =>
+      await axios.put(
+        import.meta.env.VITE_API_URL + "/api/v1/game/ranking/put/",
+        { playId: userId, score: score },
+      ),
+    onSuccess: () => naviate(`/result?id=${id}&userId=${userId}`),
+  });
+
+  useEffect(() => {
+    timerId.current = setInterval(() => {
+      setSec(time.current);
+      time.current -= 1;
+    }, 1000);
+    return () => clearInterval(timerId.current);
+  }, []);
+
+  const stopTimer = () => {
+    clearInterval(timerId.current);
+  };
+
+  const startTimer = (sec: number) => {
+    time.current = sec;
+    timerId.current = setInterval(() => {
+      setSec(time.current);
+      time.current -= 1;
+    }, 1000);
+  };
+
+  const onClick = (value: boolean) => {
+    setViewComment(value ? "correct" : "incorrect");
+    stopTimer();
+    if (!value) return;
     setScore(
       score +
         Math.floor(
-          (currentQuestion.options.score * (timeLeft / INTERVAL)) /
-            currentQuestion.options.time,
+          (currentQuestion.options.score * sec) / currentQuestion.options.time,
         ),
     );
   };
 
-  useEffect(() => {
-    if (page === data.length || !data[page]) return;
-
-    const timer = setInterval(() => {
-      if (timeLeft < -1) {
-        clearInterval(timer);
-        return;
-      }
-      setTimeLeft((prevTime) => prevTime - INTERVAL);
-    }, INTERVAL);
-
-    if (timeLeft <= 0) {
-      searchParams.set("page", String(page + 1));
-      setSearchParams(searchParams);
-      if (page + 1 === data.length) return;
-      setTimeLeft(data[page + 1] ? data[page + 1].options.time * INTERVAL : -1);
-      setCurrentQuestion(data[page + 1]);
+  const onClickNext = () => {
+    setViewComment(null);
+    searchParams.set("page", String(page + 1));
+    setSearchParams(searchParams);
+    if (page + 1 === data.length) {
+      mutate();
+      return;
     }
+    startTimer(data[page + 1].options.time);
+    setSec(data[page + 1].options.time);
+    setCurrentQuestion(data[page + 1]);
+  };
 
-    return () => {
-      clearInterval(timer);
-    };
-  }, [data, page, searchParams, setSearchParams, timeLeft]);
+  useEffect(() => {
+    if (sec >= 0 || page >= data.length) {
+      return;
+    }
+    setViewComment("incorrect");
+    stopTimer();
+
+    return clearInterval(timerId.current);
+  }, [data, page, searchParams, setSearchParams, sec]);
 
   return (
     <VStack h={"100vh"} justify={"center"} position={"relative"} w={"100%"}>
       {page < data.length && (
         <>
-          {Number(seconds) > -1 && <Timer seconds={seconds} />}
-          <Score score={score} />
+          <ScoreTimerPanel seconds={sec} score={score} />
+          <HintButton currentQuestion={currentQuestion} seconds={sec} />
           <VStack
             w={"100%"}
             p={"6px"}
@@ -105,15 +145,23 @@ function GameInner({ data }: { data: Question[] }) {
               {currentQuestion.type === 0 ? (
                 <MultipleChoicePanel
                   choices={currentQuestion.choices}
-                  onClick={onCorrect}
+                  onClick={onClick}
                 />
               ) : (
-                <></>
+                <SubjectPanel
+                  onClick={onClick}
+                  correctAnswer={currentQuestion.shortAnswer}
+                />
               )}
             </Center>
           </VStack>
         </>
       )}
+      <CommentaryPanel
+        viewComment={viewComment}
+        currentQuestion={currentQuestion}
+        onClickNext={onClickNext}
+      />
     </VStack>
   );
 }

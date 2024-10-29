@@ -8,6 +8,7 @@ import QuizDetailPage from "@/pages/quiz";
 import QuizListPage from "@/pages/quiz-list";
 import ParticipationPage from "@/pages/participation";
 import PlayPage from "@/pages/play/index.tsx";
+import ResultPage from "@/pages/result";
 
 export const router = createBrowserRouter([
   {
@@ -31,6 +32,7 @@ export const router = createBrowserRouter([
       { path: "/quiz", element: <QuizDetailPage /> },
       { path: "/participation", element: <ParticipationPage /> },
       { path: "/play", element: <PlayPage /> },
+      { path: "/result", element: <ResultPage /> },
     ],
   },
 ]);
