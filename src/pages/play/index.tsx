@@ -68,7 +68,7 @@ function GameInner({ data }: { data: Question[] }) {
         import.meta.env.VITE_API_URL + "/api/v1/game/ranking/put/",
         { playId: userId, score: score },
       ),
-    onSuccess: () => naviate(`/result?id=${id}&userId=${userId}`),
+    onSuccess: () => naviate(`/result?id=${id}&user-id=${userId}`),
   });
 
   useEffect(() => {

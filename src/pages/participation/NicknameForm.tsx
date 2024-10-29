@@ -20,7 +20,7 @@ export function NicknameForm() {
   } = useForm();
 
   const { mutate } = useMutation({
-    mutationFn: async ({ nickname }: { nickname: string }) => {
+    mutationFn: async (nickname: string) => {
       axios
         .post(import.meta.env.VITE_API_URL + "/api/v1/game/gameJoin/", {
           quizId: id,
