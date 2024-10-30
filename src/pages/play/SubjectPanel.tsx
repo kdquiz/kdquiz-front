@@ -14,14 +14,16 @@ export function SubjectPanel({
     register,
     control,
     formState: { errors },
+    reset,
   } = useForm();
 
   return (
     <VStack>
       <form
-        onSubmit={handleSubmit(async (v) =>
-          onClick(v.answer === correctAnswer),
-        )}
+        onSubmit={handleSubmit(async (v) => {
+          reset();
+          onClick(v.answer === correctAnswer);
+        })}
       >
         <VStack maxW="300px">
           <Box bg={"white"} borderRadius={"12px"}>
