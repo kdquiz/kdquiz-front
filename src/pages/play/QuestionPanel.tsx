@@ -17,7 +17,11 @@ export function QuestionPanel({
       <QuizContainer w={"100%"} gap={4} h={"100%"}>
         <VStack h={"100%"} justify={"center"}>
           <Center p={1}>
-            <Text fontSize={currentQuestion.fileUrl ? "2xl" : "4xl"}>
+            <Text
+              fontSize={currentQuestion.fileUrl ? "2xl" : "4xl"}
+              textAlign={"center"}
+              wordBreak={"keep-all"}
+            >
               {currentQuestion.content}
             </Text>
           </Center>

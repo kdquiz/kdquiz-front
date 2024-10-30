@@ -4,7 +4,7 @@ import { Spin } from "antd";
 import axios from "axios";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Error from "@/components/Error.tsx";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 import { Question } from "@/interface/Question.ts";
 import { MultipleChoicePanel } from "@/pages/play/MultipleChoicePanel.tsx";
 import { ScoreTimerPanel } from "@/pages/play/ScoreTimerPanel.tsx";
@@ -44,6 +44,8 @@ function GameInner({ data }: { data: Question[] }) {
   const [viewComment, setViewComment] = useState<
     "correct" | "incorrect" | "timeout" | null
   >(null);
+
+  const [viewHint, setViewHint] = useReducer((prev) => !prev, false);
 
   const id = Number(searchParams.get("id"));
   const userId = Number(searchParams.get("user-id"));
@@ -93,6 +95,7 @@ function GameInner({ data }: { data: Question[] }) {
 
   const onClick = (value: boolean) => {
     setViewComment(value ? "correct" : "incorrect");
+    viewHint && setViewHint();
     stopTimer();
     if (!value) return;
     setScore(
@@ -131,7 +134,12 @@ function GameInner({ data }: { data: Question[] }) {
       {page < data.length && (
         <>
           <ScoreTimerPanel seconds={sec} score={score} />
-          <HintButton currentQuestion={currentQuestion} seconds={sec} />
+          <HintButton
+            setViewHint={setViewHint}
+            currentQuestion={currentQuestion}
+            seconds={sec}
+            viewHint={viewHint}
+          />
           <VStack
             w={"100%"}
             p={"6px"}

@@ -1,5 +1,6 @@
-import { Center, Grid, Text } from "@chakra-ui/react";
+import { Grid, Text } from "@chakra-ui/react";
 import { Choice } from "@/interface/Question.ts";
+import Button from "@/components/Button.tsx";
 
 export function MultipleChoicePanel({
   choices,
@@ -11,10 +12,11 @@ export function MultipleChoicePanel({
   return (
     <Grid w={"100%"} gap={2} gridTemplateColumns={"repeat(2, 1fr)"} h={"100%"}>
       {choices.map((v, i) => (
-        <Center
+        <Button
           borderRadius={"24px"}
           bg={"buttonBg" + (i + 1)}
           py={5}
+          height={"100%"}
           boxShadow={"2px 2px 2px #646363"}
           position={"relative"}
           onClick={() => onClick(v.isCorrect)}
@@ -28,7 +30,7 @@ export function MultipleChoicePanel({
           >
             {v.content}
           </Text>
-        </Center>
+        </Button>
       ))}
     </Grid>
   );

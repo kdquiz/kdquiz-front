@@ -2,16 +2,18 @@ import Button from "@/components/Button.tsx";
 import { Question } from "@/interface/Question.ts";
 import { Text } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import { useReducer } from "react";
 
 export function HintButton({
   seconds,
   currentQuestion,
+  viewHint,
+  setViewHint,
 }: {
   seconds: number;
   currentQuestion: Question;
+  viewHint: boolean;
+  setViewHint: () => void;
 }) {
-  const [viewHint, setViewHint] = useReducer((prev) => !prev, false);
   return (
     <>
       {currentQuestion.options.useHint && (

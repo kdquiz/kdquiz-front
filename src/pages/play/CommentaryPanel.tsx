@@ -36,11 +36,13 @@ export function CommentaryPanel({
                 }[viewComment]}
             </Text>
             {currentQuestion.type === 1 && (
-              <Text fontSize={"4xl"} color={"primary"}>
+              <Text fontSize={"4xl"} color={"primary"} wordBreak={"keep-all"}>
                 {currentQuestion.shortAnswer}
               </Text>
             )}
-            <Text fontSize={"3xl"}>{currentQuestion.options.commentary}</Text>
+            <Text fontSize={"3xl"} wordBreak={"keep-all"}>
+              {currentQuestion.options.commentary}
+            </Text>
             <Button
               borderRadius={"12px"}
               bg={"primary"}
