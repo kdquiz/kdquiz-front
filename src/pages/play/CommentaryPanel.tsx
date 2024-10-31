@@ -27,7 +27,18 @@ export function CommentaryPanel({
       <FadeInSlideUpWrapper>
         <QuizContainer>
           <VStack gap={4} px={4} py={"8"}>
-            <Text fontSize={"4xl"}>
+            <Text
+              fontSize={"4xl"}
+              color={
+                viewComment
+                  ? {
+                      correct: "blue",
+                      incorrect: "red",
+                      timeout: "red",
+                    }[viewComment]
+                  : undefined
+              }
+            >
               {viewComment &&
                 {
                   correct: "정답!!",

@@ -15,7 +15,7 @@ export function QuestionPanel({
       height={"50%"}
     >
       <QuizContainer w={"100%"} gap={4} h={"100%"}>
-        <VStack h={"100%"} justify={"center"}>
+        <VStack h={"100%"} justify={"center"} p={"0 18px"}>
           <Center p={1}>
             <Text
               fontSize={currentQuestion.fileUrl ? "2xl" : "4xl"}
@@ -29,7 +29,7 @@ export function QuestionPanel({
             <Image
               w={"100%"}
               aspectRatio={"5/3"}
-              objectFit={"cover"}
+              objectFit={"contain"}
               objectPosition={"center"}
               src={import.meta.env.VITE_API_URL + "/" + currentQuestion.fileUrl}
             />
