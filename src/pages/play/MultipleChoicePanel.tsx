@@ -27,6 +27,7 @@ export function MultipleChoicePanel({
             border={"none"}
             fontSize={"3xl"}
             textAlign={"center"}
+            whiteSpace={"wrap"}
           >
             {v.content}
           </Text>

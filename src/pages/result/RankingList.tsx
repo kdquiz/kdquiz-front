@@ -55,11 +55,7 @@ export function RankingList({
       key={userId}
     >
       {data.map(({ rank, nickname, score, playId }) => (
-        <motion.div
-          variants={ReviewItemVariants}
-          key={playId}
-          id={String(playId)}
-        >
+        <motion.div variants={ReviewItemVariants} key={playId}>
           <Flex
             w={"100%"}
             p={userId === playId ? 2 : 4}
